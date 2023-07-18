@@ -1,9 +1,4 @@
-
-import './App.css'
-
 function App() {
-
-
   return (
     <>
       <h1>ArtHub</h1>
