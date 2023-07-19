@@ -2,6 +2,7 @@ const express = require("express");
 var cors = require("cors");
 const { connection } = require("./config/database");
 require("dotenv").config();
+const { artworkRouter } = require("./routes/artworkRoute");
 
 const app = express();
 app.use(express.json());
@@ -10,6 +11,8 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.status(200).send(`Welcome to Homepage`);
 });
+
+app.use("/arts", artworkRouter);
 
 app.listen(process.env.port, async () => {
   try {
