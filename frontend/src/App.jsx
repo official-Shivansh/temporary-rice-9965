@@ -1,7 +1,9 @@
+import Navbar from "./components/common/Navbar"
 function App() {
   return (
     <>
-      <h1>ArtHub</h1>
+      
+      <Navbar/>
       
     </>
   )
