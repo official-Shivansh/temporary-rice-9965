@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 userRouter.post("/register", async (req, res) => {
-    const { password } = req.body;
+    const { email, password } = req.body;
     try {
         const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
@@ -16,7 +16,7 @@ userRouter.post("/register", async (req, res) => {
         }
         bcrypt.hash(password, 5, async (err, hash) => {
             if (err) {
-                res.json({ err });
+                res.json({ err: err.message });
             } else {
                 const user = new UserModel({ ...req.body, password: hash });
                 await user.save();
@@ -27,7 +27,7 @@ userRouter.post("/register", async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({ error });
+        res.status(500).json({ error: error.message });
     }
 });
 userRouter.post("/login", async (req, res) => {
