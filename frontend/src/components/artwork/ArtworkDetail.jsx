@@ -36,13 +36,14 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork })
         <div>
             <Box
                 bg={useColorModeValue('white', 'gray.800')}
-                maxW="sm"
+                maxW="350px"
                 margin={2}
                 style={{ boxShadow: "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset", border: "5px solid red" }}
                 borderWidth="1px"
                 rounded="lg"
                 shadow="lg"
                 position="relative"
+                justifyContent={"center"}
             >
 
                 <Circle

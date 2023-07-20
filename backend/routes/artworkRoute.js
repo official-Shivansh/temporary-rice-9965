@@ -26,7 +26,7 @@ artworkRouter.post("/addart", async (req, res) => {
       likes,
       comments,
     });
-    // await newnote.populate("creator");
+     await newArt.populate("creator");
     res.status(200).send({ msg: "Artwork added", art: newArt });
   } catch (error) {
     res.status(400).send({ error: error.message });

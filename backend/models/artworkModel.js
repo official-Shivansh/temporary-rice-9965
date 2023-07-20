@@ -8,9 +8,10 @@ const artworkSchema = new mongoose.Schema(
     tags: [String],
     creator: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "UserModel",
+      required: true,
     },
-    creator_name: { type: String },
+    creator_name: String,
     price: { type: Number, required: true },
     description: { type: String, required: true },
     comments: [

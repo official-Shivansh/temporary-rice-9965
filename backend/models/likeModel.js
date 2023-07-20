@@ -4,11 +4,7 @@ const likeSchema = new mongoose.Schema(
   {
     liker: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
-    },
-    liked_artwork: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "artwork",
+      ref: "UserModel",
     },
   },
   { versionKey: false }
