@@ -4,13 +4,22 @@ const artworkRouter = Router();
 
 artworkRouter.post("/addart", async (req, res) => {
   try {
-    let { title, image, price, description, comments, likes, typeOfArtWork } =
-      req.body;
+    let {
+      title,
+      image,
+      price,
+      tags,
+      description,
+      comments,
+      likes,
+      typeOfArtWork,
+    } = req.body;
     let newArt = await ArtworkModel.create({
       title,
       image,
       typeOfArtWork,
       price,
+      tags,
       description,
       creator: req.userId,
       creator_name: req.username,
