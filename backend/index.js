@@ -4,13 +4,12 @@ const { connection } = require("./config/database");
 require("dotenv").config();
 const { artworkRouter } = require("./routes/artworkRoute");
 const { userRouter } = require("./routes/userRoute");
-
 const { authMiddleware } = require("./middleware/auth.middleware");
+
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-
 app.get("/", (req, res) => {
   res.status(200).send(`Welcome to Homepage`);
 });
@@ -18,7 +17,9 @@ app.get("/", (req, res) => {
 app.use("/users", userRouter);
 
 app.use(authMiddleware);
+
 app.use("/arts", artworkRouter);
+
 
 app.listen(process.env.port, async () => {
   try {
