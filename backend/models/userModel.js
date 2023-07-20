@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const user = mongoose.Schema(
+
     {
         name: String,
         email: { type: String, unique: true },
@@ -12,6 +13,7 @@ const user = mongoose.Schema(
         isArtist: { type: Boolean, default: false },
         isBuyer: { type: Boolean, default: false },
     }
+
 );
 const UserModel = mongoose.model("UserModel", user);
 module.exports = { UserModel };
