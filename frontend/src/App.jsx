@@ -10,7 +10,6 @@ function App() {
       location.pathname === "/login" ? null : (
         <Navbar />
       )}
-
       <AllRoutes />
     </>
   );
