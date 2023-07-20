@@ -3,6 +3,7 @@ var cors = require("cors");
 const { connection } = require("./config/database");
 require("dotenv").config();
 const { artworkRouter } = require("./routes/artworkRoute");
+const { userRouter } = require("./routes/userRoute");
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/arts", artworkRouter);
+app.use("/users", userRouter);
 
 app.listen(process.env.port, async () => {
   try {
