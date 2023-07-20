@@ -1,5 +1,5 @@
 
-import { combineReducers, legacy_createStore } from "redux";
+import { combineReducers, legacy_createStore, applyMiddleware } from "redux";
 import artworkReducer from "../redux/reducers/artworkReducer/artworkReducer";
 import thunk from 'redux-thunk';
 import cartReducer from './Cart/reducer';
