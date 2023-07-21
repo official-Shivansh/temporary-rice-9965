@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 
 import { postArt } from "../../redux/reducers/artworkReducer/artworkAction";
 import { useDispatch } from "react-redux"
+import { useToast } from '@chakra-ui/react'
 
-const ArtworkForm = () => {
+const ArtworkForm = ({ onClose }) => {
+    const toast = useToast()
     const dispatch = useDispatch();
     const [formState, setFormState] = useState({
         title: "",
@@ -18,14 +20,19 @@ const ArtworkForm = () => {
     const { register, handleSubmit } = useForm();
 
     const handlePost = (e) => {
-        const postFormData = new FormData();
-        postFormData.append('title', formState.title);
-        postFormData.append('image', formState.image);
-        postFormData.append('typeOfArtWork', formState.typeOfArtWork);
-        postFormData.append('tags', formState.tags);
-        postFormData.append('price', formState.price);
-        postFormData.append('description', formState.description);
-        dispatch(postArt(postFormData));
+        const postData = { ...formState }
+        console.log("inside handlePost ", postData)
+        dispatch(postArt(postData));
+        // Show toast notification after dispatching the postArt action
+        toast({
+            title: 'Your artwork posted successfully!!!',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+        });
+
+        window.location.reload();
+
     };
 
 
@@ -99,7 +106,7 @@ const ArtworkForm = () => {
                 onChange={(event) => setFormState({ ...formState, description: event.target.value })}
                 style={{ width: " 100 %", padding: "5px", border: "1px solid #ccc " }}
             />
-            <button style={{ background: "#0066FF", padding: "10px", fontSize: "18px", marginTop: "10px", color: "white", fontWeight: "600", borderRadius: "5px" }}>Post Art</button>
+            <button onClick={onClose} style={{ background: "#0066FF", padding: "10px", fontSize: "18px", marginTop: "10px", color: "white", fontWeight: "600", borderRadius: "5px" }}>Post Art</button>
         </form>
     );
 };

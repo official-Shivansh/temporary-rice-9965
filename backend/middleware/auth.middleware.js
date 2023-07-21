@@ -21,7 +21,7 @@ console.log("token in auth middleware", token);
     let decoded = jwt.verify(token, secretKey);
 
     req.userId = decoded.userId;
-    req.username = decoded.username;
+    req.name = decoded.user;
     next();
   } catch (error) {
     res

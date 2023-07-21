@@ -4,7 +4,7 @@ const { connection } = require("./config/database");
 require("dotenv").config();
 const { artworkRouter } = require("./routes/artworkRoute");
 const { userRouter } = require("./routes/userRoute");
-const { authMiddleware } = require("./middleware/auth.middleware");
+
 
 
 const app = express();
@@ -15,8 +15,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRouter);
-
-app.use(authMiddleware);
 
 app.use("/arts", artworkRouter);
 
