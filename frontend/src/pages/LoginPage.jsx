@@ -39,6 +39,7 @@ const LoginPage = () => {
           isClosable: true,
         });
         dispatch(login(res.data));
+        localStorage.setItem("userData", res.data)
         setLoading(false);
         setTimeout(() => {
           Nav("/");
