@@ -2,7 +2,7 @@ import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
 import CartPage from "./components/Cart/cart";
 import AllRoutes from "./routes/AllRoutes";
-import Landing from "./components/landing/landing";
+
 
 import { useLocation } from "react-router-dom";
 
@@ -11,15 +11,15 @@ function App() {
   return (
     <>
       {location.pathname === "/register" ||
-      location.pathname === "/login" ? null : (
+        location.pathname === "/login" ? null : (
         <>
           <Navbar />
-          <Landing />
+
         </>
       )}
       <AllRoutes />
       {location.pathname === "/register" ||
-      location.pathname === "/login" ? null : (
+        location.pathname === "/login" ? null : (
         <>
           <Footer />
         </>

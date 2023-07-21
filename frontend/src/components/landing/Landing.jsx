@@ -1,11 +1,11 @@
 import React from 'react'
 import Container from './Container'
-function landing() {
+function Landing() {
   return (
     <div>
-      <Container/>
+      <Container />
     </div>
   )
 }
 
-export default landing
+export default Landing

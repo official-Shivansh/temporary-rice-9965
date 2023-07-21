@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import {
     Flex,
@@ -11,14 +11,12 @@ import {
     Icon,
     chakra,
     Tooltip,
-    border,
-    grid,
+
 } from '@chakra-ui/react';
 
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
 
-
-const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork }) => {
+const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork, handleDelete }) => {
 
     function truncateWords(description) {
         const words = description.split('');
@@ -31,6 +29,7 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork })
         return description;
     }
 
+    console.log("inside artwork detail handle delete", handleDelete)
 
     return (
         <div>
@@ -111,7 +110,7 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork })
                                 </chakra.a>
                             </Tooltip>
                         </Button>
-                        <Button>
+                        <Button onClick={() => handleDelete(_id)}>
                             <Tooltip
                                 label="Delete item"
                                 bg="white"
