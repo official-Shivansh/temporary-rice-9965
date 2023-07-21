@@ -57,6 +57,29 @@ artworkRouter.get("/profile", async (req, res) => {
 
 artworkRouter.patch("/update/:id", async (req, res) => {
   try {
+    const userId = req.userId;
+    const payload = req.body;
+    const { id } = req.params;
+    const art = await ArtworkModel.findById(id);
+
+    const artCretorId = art.creator.toString();
+
+    console.log("id", id, "userId", userId, "artcreatorId", artCretorId);
+
+    if (artCretorId !== userId) {
+      res.status(400).send({
+        msg: "Not authorized for updating art",
+      });
+      return;
+    }
+
+    const updatedart = await ArtworkModel.findByIdAndUpdate(id, payload, {
+      new: true,
+    });
+    res.status(200).send({
+      msg: "Post updated successfully",
+      updatedart,
+    });
   } catch (error) {
     res.status(400).send({ error: error.message });
   }
@@ -75,7 +98,7 @@ artworkRouter.delete("/delete/:id", async (req, res) => {
 
     if (artCretorId !== userId) {
       res.status(400).send({
-        msg: "Not authorized for deleting post",
+        msg: "Not authorized for deleting art",
       });
       return;
     }
