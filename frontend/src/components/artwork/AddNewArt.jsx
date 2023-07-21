@@ -26,7 +26,7 @@ export default function AddNewArt() {
                     <ModalHeader>Add the new art here</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody >
-                        <ArtworkForm />
+                        <ArtworkForm onClose={onClose} />
                     </ModalBody>
                 </ModalContent>
             </Modal>

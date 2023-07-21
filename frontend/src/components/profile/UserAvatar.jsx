@@ -10,8 +10,12 @@ import {
     useColorModeValue,
     Avatar, Box, keyframes
 } from '@chakra-ui/react';
+import { useSelector } from "react-redux";
 
 export default function UserAvatar() {
+
+    const logged_in_user = useSelector((store) => store.artworkReducer.user) || "Default User"
+
     return (
         <Center py={6}>
             <Stack
@@ -41,7 +45,7 @@ export default function UserAvatar() {
                     pt={2}>
                     <AvatarWithRipple />
                     <Heading fontSize={'2xl'} fontFamily={'body'}>
-                        Lindsey James
+                        {logged_in_user}
                     </Heading>
                     <Text
                         textAlign={'center'}
