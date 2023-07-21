@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import { Link } from "react-router-dom";
-import { AiFillCamera } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import { AiFillCamera, AiOutlineLoading } from "react-icons/ai";
 import { BiErrorCircle, BiHide, BiShow } from "react-icons/bi";
+import { url } from "../components/url";
+import axios from "axios";
+import { useToast } from "@chakra-ui/react";
 export const SignupPage = () => {
+  const Nav = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const handleToggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -99,11 +103,14 @@ export const SignupPage = () => {
   const handleUploadClick = () => {
     document.querySelector(".file-upload").click();
   };
-  const handleSubmit = (event) => {
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const isFormValid =
       isValidEmail && validatePassword(password) && isValidName;
     if (isFormValid) {
+      setLoading(true);
       const formData = {
         name,
         email,
@@ -112,7 +119,28 @@ export const SignupPage = () => {
         isBuyer,
         profilePicture: profilePic,
       };
-      console.log(formData);
+      await axios.post(`${url}/users/register`, formData).then((res) => {
+        if (res.data.auth) {
+          toast({
+            title: `${res.data.message}`,
+            status: "success",
+            position: "top-center",
+            duration: 2000,
+            isClosable: true,
+          });
+          setLoading(false);
+          Nav("/login");
+        } else {
+          toast({
+            title: `${res.data.message}`,
+            status: "error",
+            position: "top-center",
+            duration: 2000,
+            isClosable: true,
+          });
+          setLoading(false);
+        }
+      });
     } else {
       setIsValidEmail(false);
       setIsValidName(false);
@@ -150,6 +178,7 @@ export const SignupPage = () => {
             autoComplete="off"
             name="name"
             value={name}
+            required
             onChange={handleNameChange}
           />
           {!isValidName && (
@@ -164,6 +193,8 @@ export const SignupPage = () => {
             id="email"
             name="email"
             value={email}
+            autoComplete="off"
+            required
             onChange={handleEmailChange}
           />
           {!isValidEmail && (
@@ -178,6 +209,8 @@ export const SignupPage = () => {
               id="password"
               name="password"
               value={password}
+              autoComplete="off"
+              required
               onChange={handlePasswordChange}
             />
             <p onClick={handleToggleShowPassword}>
@@ -217,15 +250,29 @@ export const SignupPage = () => {
           <label htmlFor="">pick one</label>
           <div id="category">
             <section>
-              <input type="checkbox" onChange={() => setIsBuyer(!isBuyer)} />
+              <input
+                type="checkbox"
+                onChange={() => setIsBuyer(!isBuyer)}
+                required
+              />
               Buy Art
             </section>
             <section>
-              <input type="checkbox" onChange={() => setIsArtist(!isArtist)} />
+              <input
+                type="checkbox"
+                onChange={() => setIsArtist(!isArtist)}
+                required
+              />
               Sell Art
             </section>
           </div>
-          <button type="submit">Continue</button>
+          <button type="submit">
+            {loading ? (
+              <AiOutlineLoading className="infinity-rotation" />
+            ) : (
+              "Register"
+            )}
+          </button>
         </form>
       </div>
     </Div>
@@ -247,6 +294,9 @@ const Div = styled.div`
     transform: translate(-30%, -50%);
     border-radius: 5px;
     padding: 50px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     h1 {
       font-size: 40px;
       font-weight: bolder;
@@ -259,6 +309,9 @@ const Div = styled.div`
       flex-direction: column;
       overflow-y: scroll;
       height: 85%;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       .row {
         height: 120px;
       }
@@ -348,11 +401,53 @@ const Div = styled.div`
         background-color: black;
         padding: 9px 15px;
         font-size: large;
-        width: fit-content;
+        width: 100px;
         margin: auto;
         font-weight: bold;
         border-radius: 10px;
         margin-top: 15px;
+        @-webkit-keyframes rotating {
+          from {
+            -webkit-transform: rotate(0deg);
+          }
+          to {
+            -webkit-transform: rotate(360deg);
+          }
+        }
+        .infinity-rotation {
+          -webkit-animation: rotating 1s linear infinite;
+          font-size: large;
+          font-weight: bold;
+          margin: auto;
+        }
+      }
+    }
+  }
+  @media screen and (min-width: 866px) and (max-width: 1024px) /* Laptop */ {
+    > div {
+      width: 40%;
+      padding: 20px 30px 30px 30px;
+    }
+  }
+  @media screen and (min-width: 481px) and (max-width: 865px) /* Tablet */ {
+    background-size: 125%;
+    > div {
+      width: 60%;
+      padding: 20px 30px 30px 30px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  @media screen and (max-width: 480px) /* Mobile */ {
+    background-size: 300%;
+    > div {
+      height: max-content;
+      width: 95%;
+      padding: 20px 30px 30px 30px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      h1 {
+        font-size: 30px;
       }
     }
   }
