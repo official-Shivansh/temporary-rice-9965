@@ -1,19 +1,16 @@
-
-import ArtworkList from "../components/artwork/ArtworkList"
-import UserAvatar from "../components/profile/UserAvatar"
-import AddNewArt from '../components/artwork/AddNewArt';
-
+import ArtworkList from "../components/artwork/ArtworkList";
+import UserAvatar from "../components/profile/UserAvatar";
+import AddNewArt from "../components/artwork/AddNewArt";
 
 const ProfilePage = () => {
-    return (
-        <div>
-            <UserAvatar />
-            <AddNewArt />
+  return (
+    <div>
+      <UserAvatar />
+      <AddNewArt />
 
-            <ArtworkList />
+      <ArtworkList />
+    </div>
+  );
+};
 
-        </div>
-    )
-}
-
-export default ProfilePage
+export default ProfilePage;
