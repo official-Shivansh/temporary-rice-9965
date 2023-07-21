@@ -10,7 +10,8 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import { FaHeart, FaComment } from "react-icons/fa";
+import { FaHeart, FaComment, FaLocationArrow } from "react-icons/fa";
+import { FaRegCommentAlt } from "react-icons/fa";
 
 // Dummy data for the image, comments, and likes
 const imageData = {
@@ -48,13 +49,22 @@ const SingleArtPage = () => {
         <IconButton
           icon={<FaHeart />}
           aria-label="Like"
-          size="sm"
+          // size="sm"
           variant="ghost"
           color="gray.600"
         />
         <Badge colorScheme="pink">{imageData.likes} Likes</Badge>
       </Flex>
-
+      <Flex border='1px solid red'>
+        <IconButton
+          icon={<FaRegCommentAlt />}
+          aria-label="Comment"
+          // size="sm"
+          variant="ghost"
+          // color="gray.600"
+        />
+        <Text m="auto" ml='2' as="b">Comments</Text>
+      </Flex>
       {/* Comments */}
       <Box mt="4">
         {comments.map((comment, index) => (
@@ -72,22 +82,36 @@ const SingleArtPage = () => {
       </Box>
 
       {/* Comment Input */}
-      <Flex mt="4">
+      <Flex mt="4" border="1px solid grey" borderRadius="8" p="2">
         <Avatar
           size="sm"
+          m="auto"
           name="Your Name"
           src="https://i.pravatar.cc/40?u=yourname"
         />
-        <Box ml="2" flex="1">
+        <Box
+          ml="2"
+          flex="1"
+          // border={"1px solid red"}
+        >
           <Input
             type="text"
+            border={"0px"}
             placeholder="Write a comment..."
             value={newComment}
+            w={"300px"}
             onChange={(e) => setNewComment(e.target.value)}
-          />
+            focusBorderColor="none"
+          ></Input>
         </Box>
-        <Button onClick={handleAddComment}>Add</Button>
-        {/* <IconButton icon={<FaComment />} aria-label="Post comment" size="sm" onClick={handleAddComment} /> */}
+        <IconButton
+          icon={<FaLocationArrow />}
+          aria-label="Post comment"
+          size="md"
+          // color={""}
+          onClick={handleAddComment}
+        />
+        {/* <Button onClick={handleAddComment}>Add</Button> */}
       </Flex>
     </Box>
   );
