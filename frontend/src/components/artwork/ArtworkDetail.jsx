@@ -4,6 +4,7 @@ import {
     Flex,
     Circle,
     Box,
+    Button,
     Image,
     Badge,
     useColorModeValue,
@@ -29,7 +30,6 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork })
 
         return description;
     }
-
 
 
     return (
@@ -98,26 +98,33 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork })
                         </Box>
                     </Flex>
                     <Flex justifyContent={"flex-end"}>
-                        <Tooltip
-                            label="Edit details"
-                            bg="white"
-                            placement={'top'}
-                            color={'#0066FF'}
-                            fontSize={'0.6em'}>
-                            <chakra.a href={'#'} display={'flex'}>
-                                <Icon as={AiTwotoneEdit} h={6} w={20} alignSelf={'center'} color={'#0066FF'} />
-                            </chakra.a>
-                        </Tooltip>
-                        <Tooltip
-                            label="Delete item"
-                            bg="white"
-                            placement={'top'}
-                            color={'#0066FF'}
-                            fontSize={'0.6em'}>
-                            <chakra.a href={'#'} display={'flex'}>
-                                <Icon as={AiTwotoneDelete} h={6} w={20} alignSelf={'center'} color={'#f44013'} />
-                            </chakra.a>
-                        </Tooltip>
+                        <Button
+                            mr={1}>
+                            <Tooltip
+                                label="Edit details"
+                                bg="white"
+                                placement={'top'}
+                                color={'#0066FF'}
+                                fontSize={'0.6em'}>
+                                <chakra.a href={'#'} display={'flex'}>
+                                    <Icon as={AiTwotoneEdit} h={6} w={8} alignSelf={'center'} color={'#0066FF'} />
+                                </chakra.a>
+                            </Tooltip>
+                        </Button>
+                        <Button>
+                            <Tooltip
+                                label="Delete item"
+                                bg="white"
+                                placement={'top'}
+                                color={'#0066FF'}
+                                fontSize={'0.6em'}>
+                                <chakra.a href={'#'} display={'flex'}>
+                                    <Icon as={AiTwotoneDelete} h={6} w={8} alignSelf={'center'} color={'#f44013'} />
+                                </chakra.a>
+                            </Tooltip>
+
+                        </Button>
+
                     </Flex>
 
                 </Box>
