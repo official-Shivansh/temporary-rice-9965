@@ -2,6 +2,9 @@ import {
   FETCH_ARTS_REQUEST,
   FETCH_ARTS_SUCCESS,
   FETCH_ARTS_FAILURE,
+  POST_ART_REQUEST,
+  POST_ART_SUCCESS,
+  POST_ART_FAILURE,
 } from "../../actionTypes";
 
 const initialState = {
@@ -29,6 +32,25 @@ const artworkReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         arts: [],
+        error: action.payload,
+      };
+    case POST_ART_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case POST_ART_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        art: action.payload,
+        error: null,
+      };
+    case POST_ART_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        art: null,
         error: action.payload,
       };
     default:
