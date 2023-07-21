@@ -23,6 +23,7 @@ import {
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  StarIcon
 } from '@chakra-ui/icons';
 
 const Navbar = () => {
@@ -55,9 +56,9 @@ const Navbar = () => {
             aria-label={'Toggle Navigation'}
           /> */}
         </Flex>
-        <Flex   flex={{ base: 1 }} justify={{ base: 'center', md: 'center' }}>
+        <Flex  flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* logo image */}
-          <Image pl={"10%"} h={"60px"} src={logo} alt="logo"/>
+          <Image pl={"2%"} h={"60px"} src={logo} alt="logo"/>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             {/* <DesktopNav /> */}
           </Flex>
@@ -68,6 +69,12 @@ const Navbar = () => {
           direction={'row'}
           spacing={6}
         >
+          <Flex title='Wishlist' justifyContent={"center"} alignItems={"center"} >
+          <StarIcon/>
+          </Flex>
+          <Flex title='Wishlist' justifyContent={"center"} alignItems={"center"} >
+            <StarIcon/>
+          </Flex>
           <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
             Sign In
           </Button>
