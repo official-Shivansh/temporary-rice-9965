@@ -261,7 +261,6 @@ export const SignupPage = () => {
               <input
                 type="checkbox"
                 onChange={() => setIsArtist(!isArtist)}
-                required
               />
               Sell Art
             </section>
@@ -357,7 +356,7 @@ const Div = styled.div`
         margin-top: 10px;
         color: #747474;
         font-weight: bold;
-        font-size: smaller;
+        font-size: 14px;
         text-transform: capitalize;
       }
       input {

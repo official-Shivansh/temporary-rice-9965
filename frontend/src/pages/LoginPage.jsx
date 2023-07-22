@@ -152,7 +152,7 @@ const Div = styled.div`
         margin-top: 20px;
         color: #747474;
         font-weight: bold;
-        font-size: smaller;
+        font-size: 14px;
         text-transform: capitalize;
       }
       input {
