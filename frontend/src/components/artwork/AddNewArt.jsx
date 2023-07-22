@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 
 import { AiOutlinePlus } from "react-icons/ai";
+import ArtworkForm from './ArtworkForm';
 export default function AddNewArt() {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -24,16 +25,9 @@ export default function AddNewArt() {
                 <ModalContent minW={650}>
                     <ModalHeader>Add the new art here</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody pb={16}>
-                        hello , a form will be here
+                    <ModalBody >
+                        <ArtworkForm onClose={onClose} />
                     </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3}>
-                            Save
-                        </Button>
-                        <Button onClick={onClose}>Cancel</Button>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>

@@ -1,23 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import {
     Flex,
     Circle,
     Box,
+    Button,
     Image,
     Badge,
     useColorModeValue,
     Icon,
     chakra,
     Tooltip,
-    border,
-    grid,
+
 } from '@chakra-ui/react';
 
 import { AiTwotoneDelete, AiTwotoneEdit } from "react-icons/ai";
 
-
-const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork }) => {
+const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork, handleDelete }) => {
 
     function truncateWords(description) {
         const words = description.split('');
@@ -30,7 +29,7 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork })
         return description;
     }
 
-
+    console.log("inside artwork detail handle delete", handleDelete)
 
     return (
         <div>
@@ -98,26 +97,33 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork })
                         </Box>
                     </Flex>
                     <Flex justifyContent={"flex-end"}>
-                        <Tooltip
-                            label="Edit details"
-                            bg="white"
-                            placement={'top'}
-                            color={'#0066FF'}
-                            fontSize={'0.6em'}>
-                            <chakra.a href={'#'} display={'flex'}>
-                                <Icon as={AiTwotoneEdit} h={6} w={20} alignSelf={'center'} color={'#0066FF'} />
-                            </chakra.a>
-                        </Tooltip>
-                        <Tooltip
-                            label="Delete item"
-                            bg="white"
-                            placement={'top'}
-                            color={'#0066FF'}
-                            fontSize={'0.6em'}>
-                            <chakra.a href={'#'} display={'flex'}>
-                                <Icon as={AiTwotoneDelete} h={6} w={20} alignSelf={'center'} color={'#f44013'} />
-                            </chakra.a>
-                        </Tooltip>
+                        <Button
+                            mr={1}>
+                            <Tooltip
+                                label="Edit details"
+                                bg="white"
+                                placement={'top'}
+                                color={'#0066FF'}
+                                fontSize={'0.6em'}>
+                                <chakra.a href={'#'} display={'flex'}>
+                                    <Icon as={AiTwotoneEdit} h={6} w={8} alignSelf={'center'} color={'#0066FF'} />
+                                </chakra.a>
+                            </Tooltip>
+                        </Button>
+                        <Button onClick={() => handleDelete(_id)}>
+                            <Tooltip
+                                label="Delete item"
+                                bg="white"
+                                placement={'top'}
+                                color={'#0066FF'}
+                                fontSize={'0.6em'}>
+                                <chakra.a href={'#'} display={'flex'}>
+                                    <Icon as={AiTwotoneDelete} h={6} w={8} alignSelf={'center'} color={'#f44013'} />
+                                </chakra.a>
+                            </Tooltip>
+
+                        </Button>
+
                     </Flex>
 
                 </Box>

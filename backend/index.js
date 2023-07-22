@@ -5,7 +5,7 @@ require("dotenv").config();
 const { artworkRouter } = require("./routes/artworkRoute");
 const { userRouter } = require("./routes/userRoute");
 const { authMiddleware } = require("./middleware/auth.middleware");
-
+const { cartRouter } = require("./routes/cartRoute");
 
 const app = express();
 app.use(express.json());
@@ -16,10 +16,9 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRouter);
 
-app.use(authMiddleware);
-
 app.use("/arts", artworkRouter);
 
+app.use("/cart", cartRouter );
 
 app.listen(process.env.port, async () => {
   try {
