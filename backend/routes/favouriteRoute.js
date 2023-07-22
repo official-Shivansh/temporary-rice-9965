@@ -1,5 +1,5 @@
 const express = require('express');
-const { FavouriteModel } = require('../models/favoutiteModel');
+const { FavouriteModel } = require('../models/favouriteModel');
 const { CartModel } = require('../models/cartModel');
 const favouriteRouter = express.Router();
 
