@@ -6,6 +6,7 @@ import {
   Image,
   Flex,
   VStack,
+  HStack,
   Text,
   Button,
   IconButton,
@@ -15,6 +16,7 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
+import { useNavigate } from 'react-router-dom';
 
 const theme = extendTheme({
   fonts: {
@@ -56,7 +58,7 @@ const CartItem = ({ item, onRemove }) => {
   );
 };
 
-const CartPage = () => {
+const Cart = () => {
   // const cartItems = useSelector((state) => state.items);
   // const dispatch = useDispatch();
   // console.log(cartItems)
@@ -76,7 +78,7 @@ const CartPage = () => {
     // Add more items to the cart as needed
   ]);
   
-
+  const navigate=useNavigate()
   const [promoCode, setPromoCode] = useState('');
   const [discountedPrice, setDiscountedPrice] = useState(null);
 
@@ -134,11 +136,17 @@ const CartPage = () => {
     const shippingRate = 5;
     return getTotalPrice() + shippingRate;
   };
+  const handleClick=()=>{
+      
+    navigate("/pay")
+  
+}
 
 
   return (
     <ChakraProvider theme={theme}>
-      <VStack align="center" p={4} w="100%">
+      <HStack align="center" p={4} w="100%" >
+      <VStack w="80%" align="center" p={4}>
       
         
         {/* Cart Items Section */}
@@ -172,73 +180,78 @@ const CartPage = () => {
         <Box fontSize="20px" mt={4} textAlign="right" w="100%">
           Total: ${getTotalPrice().toFixed(2)}
         </Box>
-
+        </VStack>
+        
+        <VStack>
         {/* Order Summary Section */}
         {cartItems.length > 0 && (
-           <Box w="100%" p={4} borderWidth={1} borderRadius={4}>
-           <Box fontSize="24px" fontWeight="bold" mb={4} textAlign="center" w="100%">
-             Order Summary
-           </Box>
+        <Box w="100%" p={4} borderWidth={1} borderRadius={6}>
+        <Box fontSize="24px" fontWeight="bold" mb={4} textAlign="center" w="100%">
+          Order Summary
+        </Box>
 
-           <Flex justifyContent="space-between" mb={2}>
-             <Text>Total Items:</Text>
-             <Text>{getCartItemCount()}</Text>
-           </Flex>
-           {promoCode && (
-            
-             <Flex justifyContent="space-between" mb={2}>
-               <Text>Promo Code Discount (10% off):</Text>
-               <Text color="green.500">-${(getTotalPrice() - discountedPrice).toFixed(2)}</Text>
-             </Flex>
-           )}
-           <Flex justifyContent="space-between" alignItems="center" gap={4} mt={4}>
-              <Input
-                placeholder="Enter Promo Code"
-                value={promoCode}
-                size="md"
-                onChange={(e) => setPromoCode(e.target.value)}
-              />
-              <Button colorScheme="blue" onClick={handleApplyPromoCode}>
-                Apply Promo Code
-              </Button>
-            </Flex>
-           <Flex justifyContent="space-between" mb={2}>
-             <Text>Discounted Price:</Text>
-             <Text>${discountedPrice !== null ? discountedPrice.toFixed(2) : getTotalPrice().toFixed(2)}</Text>
-           </Flex>
-           
-           {promoCode && (
-             <Box color="green.500" fontSize="sm" textAlign="center" mt={2}>
-               {`Promo code "${promoCode}" applied successfully!`}
-             </Box>
-           )}
-           
-           <Flex justifyContent="space-between" mb={2}>
-             <Text>Total Price:</Text>
-             <Text>${getTotalPrice().toFixed(2)}</Text>
-           </Flex>
-           
-           
-           <Flex justifyContent="space-between" mb={2}>
-             <Text>Shipping:</Text>
-             <Text>$5.00</Text>
-           </Flex>
-           <Flex justifyContent="space-between" mb={2}>
-             <Text>Estimated Delivery Date:</Text>
-             <Text>{estimateDeliveryDate()}</Text>
-           </Flex>
-           <Flex justifyContent="space-between" mb={2}>
-             <Text>Total Price with Shipping:</Text>
-             <Text>${getTotalPriceWithShipping().toFixed(2)}</Text>
-           </Flex>
-           <Button colorScheme="blue" w="100%" mt={4}>
-             Proceed to Checkout
-           </Button>
-         </Box>
+        <Flex justifyContent="space-between" mb={2}>
+          <Text>Total Items:</Text>
+          <Text>{getCartItemCount()}</Text>
+        </Flex>
+        {promoCode && (
+         
+          <Flex justifyContent="space-between" mb={2}>
+            <Text>Promo Code Discount (10% off):</Text>
+            <Text color="green.500">-${(getTotalPrice() - discountedPrice).toFixed(2)}</Text>
+          </Flex>
         )}
-      </VStack>
+        <Flex justifyContent="space-between" alignItems="center" gap={4} mt={4}>
+           <Input
+             placeholder="Enter Promo Code"
+             value={promoCode}
+             size="md"
+             onChange={(e) => setPromoCode(e.target.value)}
+           />
+           <Button colorScheme="blue" onClick={handleApplyPromoCode}>
+             Apply 
+           </Button>
+         </Flex>
+        <Flex justifyContent="space-between" mb={2}>
+          <Text>Discounted Price:</Text>
+          <Text>${discountedPrice !== null ? discountedPrice.toFixed(2) : getTotalPrice().toFixed(2)}</Text>
+        </Flex>
+        
+        {promoCode && (
+          <Box color="green.500" fontSize="sm" textAlign="center" mt={2}>
+            {`Promo code "${promoCode}" applied successfully!`}
+          </Box>
+        )}
+        
+        <Flex justifyContent="space-between" mb={2}>
+          <Text>Total Price:</Text>
+          <Text>${getTotalPrice().toFixed(2)}</Text>
+        </Flex>
+        
+        
+        <Flex justifyContent="space-between" mb={2}>
+          <Text>Shipping:</Text>
+          <Text>$5.00</Text>
+        </Flex>
+        <Flex justifyContent="space-between" mb={2}>
+          <Text>Estimated Delivery Date:</Text>
+          <Text>{estimateDeliveryDate()}</Text>
+        </Flex>
+        <Flex justifyContent="space-between" mb={2}>
+          <Text>Total Price with Shipping:</Text>
+          <Text>${getTotalPriceWithShipping().toFixed(2)}</Text>
+        </Flex>
+        <Button colorScheme="blue" w="100%" mt={4} onClick={handleClick}> 
+          Proceed to Checkout
+        </Button>
+      </Box>
+     )}
+     </VStack>  
+      </HStack>
+   <orderSummery/>
+      
     </ChakraProvider>
   );
 };
 
-export default CartPage;
+export default Cart;
