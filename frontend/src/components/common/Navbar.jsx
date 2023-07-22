@@ -1,5 +1,8 @@
 import React from 'react';
 import logo from "../images/logo.png"
+import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import {useSelector} from "react-redux"
 import {
   Box,
   Image,
@@ -25,13 +28,48 @@ import {
   ChevronRightIcon,
   StarIcon
 } from '@chakra-ui/icons';
+import { FiLock } from "react-icons/fi";
 
 const Navbar = () => {
+
+  const isAuth = useSelector((store) => {
+    store.authReducer
+  })
+
+  console.log("checkAuth",isAuth);
+
+
   const { isOpen, onToggle } = useDisclosure();
+  const [prevScrollpos, setPrevScrollpos] = useState(window.pageYOffset);
+  const [navbarTop, setNavbarTop] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        setNavbarTop(0);
+      } else {
+        setNavbarTop(-90);
+      }
+      setPrevScrollpos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollpos]);
 
   return (
     <Box>
       <Flex
+        style={{ top: `${navbarTop}px` }}
+        transition={"top 0.3s"}
+        zIndex={"5"}
+        width={"100%"}
+        position={"fixed"}
+        top={"0"}
         bg={useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
         minH={'60px'}
@@ -58,7 +96,9 @@ const Navbar = () => {
         </Flex>
         <Flex  flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* logo image */}
+          <NavLink to = "/">
           <Image pl={"2%"} h={"60px"} src={logo} alt="logo"/>
+          </NavLink>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             {/* <DesktopNav /> */}
           </Flex>
@@ -68,16 +108,23 @@ const Navbar = () => {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}
+          alignItems={"center"}
+          pl={"2%"}
         >
-          <Flex title='Wishlist' justifyContent={"center"} alignItems={"center"} >
-          <StarIcon/>
+          <Flex transition= "transform .2s" _hover={{transform:"scale(1.4)"}} title='Wishlist' justifyContent={"center"} alignItems={"center"} >
+            <StarIcon color={"black"}/>
           </Flex>
-          <Flex title='Wishlist' justifyContent={"center"} alignItems={"center"} >
-            <StarIcon/>
+          <NavLink to = "/cart">
+          <Flex transition= "transform .2s" _hover={{transform:"scale(1.4)"}} title='cart' justifyContent={"center"} alignItems={"center"} >
+          <FiLock  />
           </Flex>
+          </NavLink>
+          <NavLink to="/login"> 
           <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
             Sign In
           </Button>
+          </NavLink>
+          <NavLink to = "/register">
           <Button
             as={'a'}
             display={{ base: 'none', md: 'inline-flex' }}
@@ -92,6 +139,8 @@ const Navbar = () => {
           >
             Sign Up
           </Button>
+          </NavLink>
+          
         </Stack>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
