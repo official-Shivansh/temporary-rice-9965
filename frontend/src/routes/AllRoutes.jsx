@@ -4,7 +4,8 @@ import ProfilePage from "../pages/ProfilePage";
 import { SignupPage } from "../pages/SignupPage";
 import Payment from "../pages/Payment";
 import LoginPage from "../pages/LoginPage";
-import Landing from "../components/landing/Landing"
+import Landing from "../components/landing/Landing";
+import SingleProduct from "../pages/SingleProduct";
 const AllRoutes = () => {
   return (
     <Routes>
@@ -14,6 +15,7 @@ const AllRoutes = () => {
       <Route path="/register" element={<SignupPage />} />
       <Route path="/pay" element={<Payment />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/product" element={<SingleProduct />} />
     </Routes>
   );
 };

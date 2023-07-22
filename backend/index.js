@@ -6,6 +6,7 @@ const { artworkRouter } = require("./routes/artworkRoute");
 const { userRouter } = require("./routes/userRoute");
 const { authMiddleware } = require("./middleware/auth.middleware");
 const { cartRouter } = require("./routes/cartRoute");
+const { favouriteRouter } = require("./routes/favouriteRoute");
 
 const app = express();
 app.use(express.json());
@@ -16,9 +17,13 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRouter);
 
+app.use(authMiddleware);
+
 app.use("/arts", artworkRouter);
 
-app.use("/cart", cartRouter );
+app.use("/cart", cartRouter);
+
+app.use("/favourite", favouriteRouter);
 
 app.listen(process.env.port, async () => {
   try {
