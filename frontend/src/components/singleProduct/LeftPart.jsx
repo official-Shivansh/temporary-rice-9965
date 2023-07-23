@@ -32,10 +32,11 @@ export default function LeftPart() {
   // console.log(products, "products")
   useEffect(() => {
     const item = products?.find((element) => element._id === id);
-    setProduct(item);
+    setProduct(item)
+    console.log("item is", item)
   }, [id]);
 
-  console.log("single product", product)
+  console.log("single product", id, product, products)
 
   // const handleToggleFavorite = () => {
   //   // Toggle the favorite status of the artist
@@ -92,12 +93,12 @@ export default function LeftPart() {
               },
             }}
           >
-            Purchase for <TbCurrencyDollar /> 1.8
+            Purchase for ₹ {product?.price}
           </Button>
         </Flex>
 
         {/* Artist Details */}
-        <ArtistDetails />
+        <ArtistDetails {...product} />
       </Box>
     </Box>
   );

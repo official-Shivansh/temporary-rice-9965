@@ -8,7 +8,7 @@ import LoginPage from "../pages/LoginPage";
 import Landing from "../components/landing/Landing"
 import FavoriteItemsPage from "../pages/Favourite";
 
-import Landing from "../components/landing/Landing";
+
 import SingleProduct from "../pages/SingleProduct";
 import EditProduct from "../components/artwork/EditArtwork";
 

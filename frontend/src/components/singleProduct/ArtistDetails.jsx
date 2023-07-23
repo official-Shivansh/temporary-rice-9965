@@ -12,11 +12,7 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-let artistData = {
-  name: "John Doe",
-  bio: "Talented artist passionate about creating beautiful art.",
-  isFavorite: false,
-};
+
 
 let tags = [
   "artdigital",
@@ -44,7 +40,8 @@ let tags = [
   "artworkpainting",
 ];
 
-export default function ArtistDetails() {
+export default function ArtistDetails(props) {
+  console.log("props inside artistDetails", props)
   return (
     <Box
       className="artistDetails"
@@ -57,16 +54,11 @@ export default function ArtistDetails() {
       <Flex>
         <Avatar size="" src="https://i.pravatar.cc/40?u=yourname" />
         <Text fontSize="lg" fontWeight="bold" m="auto" ml="3">
-          {artistData.name}
+          {props.creator_name}
         </Text>
       </Flex>
       <Text className="discription" mt="4">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged.
+        {props.description}
       </Text>
       <Box className="image details" mt="4">
         <Text as="b">Image details</Text>
@@ -80,7 +72,7 @@ export default function ArtistDetails() {
               </Tr>
               <Tr>
                 <Td>Type of ArtWork</Td>
-                <Td>Sculpture</Td>
+                <Td>{props.typeOfArtWork}</Td>
               </Tr>
             </Tbody>
           </Table>
