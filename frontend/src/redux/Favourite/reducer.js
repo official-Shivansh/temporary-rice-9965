@@ -1,20 +1,21 @@
  
 
-import {  GET_CART_ITEMS,DELETE_CART_ITEM } from "../actionTypes";
+
+import {  GET_FAV_ITEMS,DELETE_FAV_ITEM } from '../actionTypes';
 
 
 const initialState = {
   items: [],
 };
 
-const cartReducer = (state = initialState, action) => {
+const FavReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_CART_ITEMS:
+    case GET_FAV_ITEMS:
       return {
         ...state,
         items: action.payload,
       };
-    case DELETE_CART_ITEM:
+    case DELETE_FAV_ITEM:
       return {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload),
@@ -24,4 +25,4 @@ const cartReducer = (state = initialState, action) => {
   }
 };
 
-export default cartReducer;
+export default FavReducer;
