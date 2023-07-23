@@ -4,7 +4,8 @@ import { FaHeart } from "react-icons/fa";
 import { TbCurrencyDollar } from "react-icons/tb";
 import ArtistDetails from "./ArtistDetails";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction";
 
 let artistData = {
   name: "John Doe",
@@ -13,7 +14,12 @@ let artistData = {
 };
 
 export default function LeftPart() {
+  const dispatch = useDispatch()
   const [isFavorite, setIsFavorite] = useState(artistData.isFavorite);
+
+  useEffect(()=>{
+    dispatch(fetchAllArts)
+  },[])
 
   const handleToggleFavorite = () => {
     setIsFavorite(!isFavorite);
@@ -23,12 +29,13 @@ export default function LeftPart() {
   const [product, setProduct] = useState({});
   const products = useSelector((store) => store.artworkReducer.allarts.arts);
 
+  // console.log(products, "products")
   useEffect(() => {
-    const item = products.find((element) => element._id === id);
+    const item = products?.find((element) => element._id === id);
     setProduct(item);
   }, [id]);
 
-  console.log(product, "products")
+  console.log("single product", product)
 
   // const handleToggleFavorite = () => {
   //   // Toggle the favorite status of the artist
@@ -47,7 +54,7 @@ export default function LeftPart() {
         <Image
           m="auto"
           className="img"
-          src="https://png.pngtree.com/thumb_back/fh260/background/20210902/pngtree-summer-mountain-sunrise-and-sunset-scenery-clouds-natural-scenery-natural-scenery-image_789792.jpg"
+          src={product?.image}
         />
       </Box>
       <Box m="9" mt="4">

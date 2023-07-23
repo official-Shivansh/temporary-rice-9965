@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <AllRoutes />
-      {location.pathname === "/register" ||
+      {/* {location.pathname === "/register" ||
       location.pathname === "/login" ? null : (
         <>
           <Navbar />
@@ -21,7 +21,7 @@ function App() {
         <>
           <Footer />
         </>
-      )}
+      )} */}
     </>
   );
 }
