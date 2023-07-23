@@ -37,7 +37,9 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork, h
                 bg={useColorModeValue('white', 'gray.800')}
                 maxW="350px"
                 margin={2}
-                style={{ boxShadow: "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset", border: "5px solid red" }}
+                style={{
+                    boxShadow: "rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset",
+                }}
                 borderWidth="1px"
                 rounded="lg"
                 shadow="lg"
@@ -99,6 +101,7 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork, h
                     <Flex justifyContent={"flex-end"}>
                         <Button
                             mr={1}>
+                            <Link to={`/arts/${_id}/edit`}>
                             <Tooltip
                                 label="Edit details"
                                 bg="white"
@@ -108,7 +111,8 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork, h
                                 <chakra.a href={'#'} display={'flex'}>
                                     <Icon as={AiTwotoneEdit} h={6} w={8} alignSelf={'center'} color={'#0066FF'} />
                                 </chakra.a>
-                            </Tooltip>
+                                </Tooltip>
+                            </Link>
                         </Button>
                         <Button onClick={() => handleDelete(_id)}>
                             <Tooltip

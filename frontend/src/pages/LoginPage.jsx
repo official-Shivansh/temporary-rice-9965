@@ -39,7 +39,9 @@ const LoginPage = () => {
           isClosable: true,
         });
         dispatch(login(res.data));
-        localStorage.setItem("userData",JSON.stringify(res.data))
+        localStorage.setItem("user", JSON.stringify(res.data.user),
+          localStorage.setItem("token", JSON.stringify(res.data.token))
+        )
         setLoading(false);
         setTimeout(() => {
           Nav("/");
@@ -152,7 +154,7 @@ const Div = styled.div`
         margin-top: 20px;
         color: #747474;
         font-weight: bold;
-        font-size: smaller;
+        font-size: 14px;
         text-transform: capitalize;
       }
       input {

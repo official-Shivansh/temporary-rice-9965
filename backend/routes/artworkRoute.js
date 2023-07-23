@@ -55,7 +55,7 @@ artworkRouter.get("/profile", async (req, res) => {
   }
 });
 
-artworkRouter.patch("/update/:id", async (req, res) => {
+artworkRouter.patch("/:id", async (req, res) => {
   try {
     const userId = req.userId;
     const payload = req.body;
@@ -85,7 +85,7 @@ artworkRouter.patch("/update/:id", async (req, res) => {
   }
 });
 
-artworkRouter.delete("/delete/:id", async (req, res) => {
+artworkRouter.delete("/:id", async (req, res) => {
   try {
     const userId = req.userId;
 
@@ -107,6 +107,27 @@ artworkRouter.delete("/delete/:id", async (req, res) => {
     res.status(200).send({
       msg: "Art deleted successfully",
       deletedart,
+    });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+
+// getting a single product
+
+artworkRouter.get("/:id", async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+    const art = await ArtworkModel.findById(id);
+
+    // const artCretorId = art.creator.toString();
+
+    console.log("id", id, "userId", userId, "artcreatorId", artCretorId);
+
+    res.status(200).send({
+      msg: "Post updated successfully",
+      art,
     });
   } catch (error) {
     res.status(400).send({ error: error.message });
