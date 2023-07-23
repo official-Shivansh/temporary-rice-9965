@@ -16,32 +16,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction";
 import { useParams } from "react-router";
 
-// let tags = [
-//   "artdigital",
-//   "artwork",
-//   "deviantart",
-//   "deviantartist",
-//   "digital",
-//   "digitalartwork",
-//   "digitaldrawing",
-//   "digitalpainting",
-//   "environment",
-//   "fantasyartwork",
-//   "fantasylandscape",
-//   "landscape",
-//   "landscapeart",
-//   "landscapescenery",
-//   "moody",
-//   "mountains",
-//   "peaceful",
-//   "photoshop",
-//   "quiet",
-//   "sunset",
-//   "wallpaper",
-//   "water",
-//   "artworkpainting",
-// ];
-
 export default function ArtistDetails() {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -53,7 +27,7 @@ export default function ArtistDetails() {
     dispatch(fetchAllArts);
     const item = products?.find((element) => element._id === id);
     setProduct(item);
-  }, [id, products]);
+  }, [id]);
 
   return (
     <Box

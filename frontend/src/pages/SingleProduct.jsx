@@ -5,7 +5,7 @@ import { Box, Flex } from "@chakra-ui/react";
 
 export default function SingleProduct() {
   return (
-    <Box>
+    <Box mt='80px'>
       <Flex gap="5" flexDirection={{ base: "column", md: "row" }}>
         <Box p="5" w={{ base: "100%",  md: "65%"}}>
           <LeftPart />
