@@ -84,12 +84,35 @@ const EditProduct = () => {
             border: "1px solid grey",
             padding: "5px",
             borderRadius: "3px"
+        },
+        img: {
+            width: "300px"
         }
     };
+
+
+    // Add media queries for responsiveness
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth < 768) {
+        // Adjust styles for small screens (less than 768px wide)
+        styles.container.flexDirection = 'column';
+        styles.input.width = '100%';
+        styles.input.marginRight = '0';
+        styles.input.marginLeft = '0';
+        styles.input.maxWidth = '400px';
+
+    } else if (screenWidth < 992) {
+        // Adjust styles for medium screens (between 768px and 991px wide)
+        styles.container.flexDirection = 'row';
+        styles.container.flexWrap = 'wrap';
+        styles.input.marginRight = '10px';
+        styles.input.marginLeft = '10px';
+
+    }
     return (
         <div style={styles.container}>
-
-            <img alt='imageInEdit' src='https://as2.ftcdn.net/v2/jpg/03/01/92/83/1000_F_301928370_bqDFDLxE9YsS3nTsukbDkwXqKK2xwqXO.jpg' style={{ width: "300px" }} />
+            <img alt='imageInEdit' src='https://as2.ftcdn.net/v2/jpg/03/01/92/83/1000_F_301928370_bqDFDLxE9YsS3nTsukbDkwXqKK2xwqXO.jpg' style={styles.img} />
             <div style={styles.input} >
                 <h2 style={styles.title}>Editing: {product.title}</h2>
                 <label style={styles.label}>Title:</label>
@@ -100,7 +123,7 @@ const EditProduct = () => {
                 <input type='text' style={styles.box} value={type} onChange={(e) => setType(e.target.value)} placeholder="Product Type" />
                 <button style={styles.button} onClick={handleEdit}>Update</button>
             </div>
-            <img alt='imageInEdit' src='https://media.istockphoto.com/id/1058684612/vector/man-artist-painting-autumn-tree-landscape-in-the-park-isolated-vector-illustration-scene.jpg?s=2048x2048&w=is&k=20&c=j6mtlZJTJdYBHuBqU3W5PdK69xXIngE9pSMATem_UpI=' style={{ width: "300px" }} />
+
         </div>
 
     )
