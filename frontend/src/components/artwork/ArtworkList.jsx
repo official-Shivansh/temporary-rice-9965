@@ -3,7 +3,7 @@ import ArtworkDetail from './ArtworkDetail'
 import { Box, useBreakpointValue } from '@chakra-ui/react';
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchArts, deleteArt } from '../../redux/reducers/artworkReducer/artworkAction';
+import { fetchArts, deleteArt, fetchAllArts } from '../../redux/reducers/artworkReducer/artworkAction';
 const ArtworkList = () => {
 
     const dispatch = useDispatch()
@@ -15,6 +15,7 @@ const ArtworkList = () => {
 
     useEffect(() => {
         dispatch(fetchArts)
+        dispatch(fetchAllArts)
     }, [reload])
 
 

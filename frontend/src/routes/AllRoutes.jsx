@@ -6,6 +6,7 @@ import Payment from "../pages/Payment";
 import LoginPage from "../pages/LoginPage";
 import Landing from "../components/landing/Landing";
 import SingleProduct from "../pages/SingleProduct";
+import EditProduct from "../components/artwork/EditArtwork";
 const AllRoutes = () => {
   return (
     <Routes>
@@ -16,6 +17,8 @@ const AllRoutes = () => {
       <Route path="/pay" element={<Payment />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/product/:id" element={<SingleProduct />} />
+//      <Route path="/art" element={<SingleProduct />} />
+      <Route path="/arts/:id/edit" element={<EditProduct />} />
     </Routes>
   );
 };
