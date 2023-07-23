@@ -2,6 +2,7 @@ import {
   FETCH_ARTS_REQUEST,
   FETCH_ARTS_SUCCESS,
   FETCH_ARTS_FAILURE,
+  UPDATE_ART_FAILURE,
   POST_ART_REQUEST,
   POST_ART_SUCCESS,
   POST_ART_FAILURE,
@@ -9,6 +10,7 @@ import {
   DELETE_ART_REQUEST,
   DELETE_ART_SUCCESS,
   FETCH_ALLARTS_SUCCESS,
+  UPDATE_ART_SUCCESS,
 } from "../../actionTypes";
 
 import axios from "axios";
@@ -106,18 +108,31 @@ export const deleteArt = (id) => (dispatch) => {
     });
 };
 
-export const patchArt = (id) => (dispatch) => {
-  console.log("inside deleteArt function id is", id);
+export const patchArt = (id, data) => (dispatch) => {
+  console.log("inside patchArt function id is", id);
   dispatch({ type: DELETE_ART_REQUEST });
+
   axios
-    .patch(`${url}/arts/${id}`, config)
-    .then((response) => {})
-    .catch((error) => {});
+    .patch(`${url}/arts/${id}`, data, config)
+    .then((response) => {
+      const updatedart = response.data.updatedart;
+      dispatch({
+        type: UPDATE_ART_SUCCESS,
+        payload: updatedart,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: UPDATE_ART_FAILURE,
+        error: error.message,
+      });
+    });
 };
 
 // productApi.js
 export async function getProductById(productId) {
   try {
+    console.log(config);
     const response = await fetch(`${url}/${productId}`, config);
 
     if (response.ok) {
