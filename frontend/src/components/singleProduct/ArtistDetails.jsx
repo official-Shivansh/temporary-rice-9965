@@ -55,8 +55,6 @@ export default function ArtistDetails() {
     setProduct(item);
   }, [id, products]);
 
-  
-
   return (
     <Box
       className="artistDetails"

@@ -31,6 +31,7 @@ export default function LeftPart() {
 
   useEffect(() => {
     const item = products?.find((element) => element._id === id);
+
     setProduct(item);
   }, [id, products]);
 
@@ -84,12 +85,12 @@ export default function LeftPart() {
               },
             }}
           >
-            Purchase for <TbCurrencyDollar /> 1.8
+            Purchase for ₹ {product?.price}
           </Button>
         </Flex>
 
         {/* Artist Details */}
-        <ArtistDetails />
+        <ArtistDetails {...product} />
       </Box>
     </Box>
   );

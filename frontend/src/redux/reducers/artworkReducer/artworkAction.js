@@ -153,13 +153,13 @@ export async function getProductById(productId) {
 
 // Like function
 
-export const handleLike = async (id) => {
-   try {
-     // Make a POST request to the backend API to like/unlike the artwork
-   const response = await axios.post(`/arts/${id}/like`, config);
-    return response
-
-   } catch (error) {
-     console.error("Error liking/unliking artwork:", error);
-   }
- };
+export const handleLike = async (id, userId) => {
+  try {
+    // Make a POST request to the backend API to like/unlike the artwork
+    console.log("inside handleLike", userId, id);
+    const response = await axios.post(`${url}/arts/${id}/like`, userId, config);
+    return response;
+  } catch (error) {
+    console.error("Error liking/unliking artwork:", error);
+  }
+};
