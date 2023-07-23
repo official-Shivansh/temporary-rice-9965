@@ -17,3 +17,5 @@ export const GET_CART_ITEMS = "GET_CART_ITEMS";
 export const DELETE_CART_ITEM = 'DELETE_CART_ITEM';
 export const GET_FAV_ITEMS = "GET_CART_ITEMS";
 export const DELETE_FAV_ITEM = 'DELETE_CART_ITEM';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const ADD_TO_FAVOURITE = 'ADD_TO_FAVOURITE';

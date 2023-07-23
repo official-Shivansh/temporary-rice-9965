@@ -18,11 +18,7 @@ app.get("/", (req, res) => {
 app.use("/users", userRouter);
 app.use("/arts", artworkRouter);
 app.use(authMiddleware);
-
-
-
 app.use("/cart", cartRouter);
-
 app.use("/favourite", favouriteRouter);
 
 app.listen(process.env.port, async () => {
