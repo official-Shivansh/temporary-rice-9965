@@ -19,7 +19,7 @@ export default function UserAvatar() {
     const logged_in_user = logged.name || useSelector((store) => store.artworkReducer.user) 
 
     return (
-        <Center py={6}>
+        <Center py={6} style={{ marginTop: "70px" }}>
             <Stack
                 borderWidth="1px"
                 borderRadius="lg"

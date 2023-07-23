@@ -30,7 +30,6 @@ const ArtworkList = () => {
         <Box
             style={{
                 display: "grid",
-                border: "5px solid blue",
                 gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
                 margin: "25px",
             }}
