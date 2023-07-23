@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Image, Box, Flex, Button, Heading, Text, Input, InputGroup, InputLeftElement,  Grid, GridItem } from '@chakra-ui/react'
 import BgVideo from "../images/background.mp4"
 import BgVideo2 from "../images/background2.mp4"
 import { Search2Icon } from '@chakra-ui/icons'
 import YouTube from 'react-youtube';
-import {AiOutlineHeart,AiFillHeart  } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux"
+import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction"
+import { Link } from 'react-router-dom'
 function Container() {
     const opts = {
         height: '130%',
         width: '100%',
 
     };
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(fetchAllArts)
+    }, [])
+
+    const products = useSelector((store => store.artworkReducer.allarts.arts))
+    console.log("inside homepage products", products)
     return (
         <>
             <Box   mt={"5%"} w={"100%"} h={"80vh"}>
@@ -53,92 +63,25 @@ function Container() {
             </Box>
             <Flex width={"100%"} justifyContent={"center"}>
                 
-            <Grid w={"90%"} mt={"5%"}  templateColumns={{base:'repeat(1,1fr)',sm:'repeat(2,1fr)',md:'repeat(3, 1fr)',lg:'repeat(4, 1fr)'}}  gap={6}>
-                <GridItem  w='100%' h='auto'   transition= "transform .2s" _hover={{transform:"scale(1.1)"}} >
-                    <Image src='https://cdn.dribbble.com/userupload/8756089/file/original-6ffb02b7f1e8e50d9dd2f22daddbf6c5.jpg?resize=400x300&vertical=center'/>
-                    <Flex p={"5%"} pt={"2%"} justifyContent={"space-between"}>
-                        <Text as={"b"}>
-                            Shiv
-                        </Text>
-                        <Flex>
-                       <AiFillHeart color='red' size={"20px"}/>
-                       <Text>12</Text>
-                        </Flex>
-                    </Flex>
-                </GridItem>
-                <GridItem  w='100%' h='auto'   transition= "transform .2s" _hover={{transform:"scale(1.1)"}} >
-                    <Image src='https://cdn.dribbble.com/userupload/8756089/file/original-6ffb02b7f1e8e50d9dd2f22daddbf6c5.jpg?resize=400x300&vertical=center'/>
-                    <Flex p={"5%"} pt={"2%"} justifyContent={"space-between"}>
-                        <Text as={"b"}>
-                            Shiv
-                        </Text>
-                        <Flex>
-                       <AiFillHeart color='red' size={"20px"}/>
-                       <Text>12</Text>
-                        </Flex>
-                    </Flex>
-                </GridItem>
-                <GridItem  w='100%' h='auto'   transition= "transform .2s" _hover={{transform:"scale(1.1)"}} >
-                    <Image src='https://cdn.dribbble.com/userupload/8756089/file/original-6ffb02b7f1e8e50d9dd2f22daddbf6c5.jpg?resize=400x300&vertical=center'/>
-                    <Flex p={"5%"} pt={"2%"} justifyContent={"space-between"}>
-                        <Text as={"b"}>
-                            Shiv
-                        </Text>
-                        <Flex>
-                       <AiFillHeart color='red' size={"20px"}/>
-                       <Text>12</Text>
-                        </Flex>
-                    </Flex>
-                </GridItem>
-                <GridItem  w='100%' h='auto'   transition= "transform .2s" _hover={{transform:"scale(1.1)"}} >
-                    <Image src='https://cdn.dribbble.com/userupload/8756089/file/original-6ffb02b7f1e8e50d9dd2f22daddbf6c5.jpg?resize=400x300&vertical=center'/>
-                    <Flex p={"5%"} pt={"2%"} justifyContent={"space-between"}>
-                        <Text as={"b"}>
-                            Shiv
-                        </Text>
-                        <Flex>
-                       <AiFillHeart color='red' size={"20px"}/>
-                       <Text>12</Text>
-                        </Flex>
-                    </Flex>
-                </GridItem>
-                <GridItem  w='100%' h='auto'   transition= "transform .2s" _hover={{transform:"scale(1.1)"}} >
-                    <Image src='https://cdn.dribbble.com/userupload/8756089/file/original-6ffb02b7f1e8e50d9dd2f22daddbf6c5.jpg?resize=400x300&vertical=center'/>
-                    <Flex p={"5%"} pt={"2%"} justifyContent={"space-between"}>
-                        <Text as={"b"}>
-                            Shiv
-                        </Text>
-                        <Flex>
-                       <AiFillHeart color='red' size={"20px"}/>
-                       <Text>12</Text>
-                        </Flex>
-                    </Flex>
-                </GridItem>
-                <GridItem  w='100%' h='auto'   transition= "transform .2s" _hover={{transform:"scale(1.1)"}} >
-                    <Image src='https://cdn.dribbble.com/userupload/8756089/file/original-6ffb02b7f1e8e50d9dd2f22daddbf6c5.jpg?resize=400x300&vertical=center'/>
-                    <Flex p={"5%"} pt={"2%"} justifyContent={"space-between"}>
-                        <Text as={"b"}>
-                            Shiv
-                        </Text>
-                        <Flex>
-                       <AiFillHeart color='red' size={"20px"}/>
-                       <Text>12</Text>
-                        </Flex>
-                    </Flex>
-                </GridItem>
-                <GridItem  w='100%' h='auto'   transition= "transform .2s" _hover={{transform:"scale(1.1)"}} >
-                    <Image src='https://cdn.dribbble.com/userupload/8756089/file/original-6ffb02b7f1e8e50d9dd2f22daddbf6c5.jpg?resize=400x300&vertical=center'/>
-                    <Flex p={"5%"} pt={"2%"} justifyContent={"space-between"}>
-                        <Text as={"b"}>
-                            Shiv
-                        </Text>
-                        <Flex>
-                       <AiFillHeart color='red' size={"20px"}/>
-                       <Text>12</Text>
-                        </Flex>
-                    </Flex>
-                </GridItem>
-                
+                <Grid w={"90%"} mt={"5%"} templateColumns={{ base: 'repeat(1,1fr)', sm: 'repeat(2,1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={6}>
+                    {
+                        products?.map((art) => {
+                            return (
+                                <GridItem w='100%' h='auto' transition="transform .2s" _hover={{ transform: "scale(1.1)" }} key={art._id} >
+                                    <Link to={`product/${art._id}`}>    <Image src={art.image} alt='art-pic' /> </Link>
+                                    <Flex p={"5%"} pt={"2%"} justifyContent={"space-between"}>
+                                        <Text as={"b"}>
+                                            {art.creator_name}
+                                        </Text>
+                                        <Flex>
+                                            <AiFillHeart color='red' size={"20px"} />
+                                            <Text>12</Text>
+                                        </Flex>
+                                    </Flex>
+                                </GridItem>
+                            )
+                        })
+                    }
                
             </Grid>
             </Flex>

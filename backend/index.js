@@ -16,10 +16,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRouter);
-
+app.use("/arts", artworkRouter);
 app.use(authMiddleware);
 
-app.use("/arts", artworkRouter);
+
 
 app.use("/cart", cartRouter);
 
