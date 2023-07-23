@@ -15,14 +15,19 @@ const ArtworkList = () => {
 
     useEffect(() => {
         dispatch(fetchArts)
-        dispatch(fetchAllArts)
+
     }, [reload])
 
+    useEffect(() => {
+        dispatch(fetchArts);
+    }, []);
 
     const handleDelete = (postId) => {
         // Assuming the post object has the _id field
+        console.log("handle delete called")
         dispatch(deleteArt(postId))
-        setReload((prev) => prev + 1);
+        setReload(reload + 1);
+        dispatch(fetchArts)
     };
 
     const columnCount = useBreakpointValue({ base: 1, sm: 1, md: 2, lg: 3, xl: 4, xxl: 6 });
