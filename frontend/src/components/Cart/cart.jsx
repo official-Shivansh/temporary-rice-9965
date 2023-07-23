@@ -17,6 +17,8 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import { getCartItems,deleteCartItem  } from '../../redux/Cart/action';
+
 
 const theme = extendTheme({
   fonts: {
@@ -24,74 +26,28 @@ const theme = extendTheme({
   },
 });
 
-const CartItem = ({ item, onRemove }) => {
 
-  return (
-    <Flex
-      justifyContent="space-between"
-      alignItems="center"
-      p={4}
-      mb={4}
-      borderWidth={1}
-      borderRadius={4}
-      _hover={{
-        shadow: 'md',
-      }}
-    >
-      <Flex alignItems="center">
-        <Image src={item.image} alt={item.name} boxSize="80px" mr={4} />
-        <VStack align="start">
-          <Text fontWeight="bold">{item.name}</Text>
-          <Text color="gray.600" fontSize="sm">
-            ${item.price.toFixed(2)}
-          </Text>
-        </VStack>
-      </Flex>
-      <IconButton
-        icon={<CloseIcon />}
-        variant="ghost"
-        colorScheme="red"
-        aria-label="Remove item"
-        onClick={() => onRemove(item.id)}
-      />
-    </Flex>
-  );
-};
 
 const Cart = () => {
-  // const cartItems = useSelector((state) => state.items);
-  // const dispatch = useDispatch();
-  // console.log(cartItems)
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Product 1',
-      price: 10.99,
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSlktcQiMYZGRujYel00rXUw80bQLpNJ1Y4Q&usqp=CAU',
-    },
-    {
-      id: 2,
-      name: 'Product 2',
-      price: 15.49,
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSlktcQiMYZGRujYel00rXUw80bQLpNJ1Y4Q&usqp=CAU',
-    },
-    // Add more items to the cart as needed
-  ]);
-  
-  const navigate=useNavigate()
+   const cartItems = useSelector((store) => store.cartReducer.items);
+  const dispatch = useDispatch();
+   console.log(cartItems)
+ 
+   const navigate=useNavigate()
   const [promoCode, setPromoCode] = useState('');
   const [discountedPrice, setDiscountedPrice] = useState(null);
 
   useEffect(() => {
     // Calculate discounted price whenever promoCode or cartItems change
-   
+   dispatch(getCartItems())
     calculateDiscountedPrice();
-  }, [promoCode, cartItems,discountedPrice]);
+    
+  }, [dispatch,promoCode, cartItems,discountedPrice]);
 
   const handleApplyPromoCode = () => {
     // Here, you can implement the logic to verify the promo code and apply the discount
     // For now, we'll just assume a promo code named "DISCOUNT10" that gives 10% off
-    if (promoCode === 'DISCOUNT10') {
+    if (promoCode === 'masai20') {
       setDiscountedPrice((prevTotal) => prevTotal * 0.9);
     } else {
       // Promo code is invalid or does not exist
@@ -114,7 +70,7 @@ const Cart = () => {
   };
 
   const handleDelete = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    dispatch(deleteCartItem(itemId));
   };
 
   const getTotalPrice = () => {
@@ -134,23 +90,21 @@ const Cart = () => {
   const getTotalPriceWithShipping = () => {
     // Flat shipping rate of $5
     const shippingRate = 5;
-    return getTotalPrice() + shippingRate;
+    return getTotalPrice() + shippingRate-(getTotalPrice() - discountedPrice).toFixed(2);
   };
   const handleClick=()=>{
-      
-    navigate("/pay")
-  
+    navigate("/pay") 
 }
 
 
   return (
     <ChakraProvider theme={theme}>
-      <HStack align="center" p={4} w="100%" >
-      <VStack w="80%" align="center" p={4}>
+      <HStack p={4} w="100%" align="flex-start"  >
+      <VStack w="70%" align="center" p={4}>
       
         
         {/* Cart Items Section */}
-        {cartItems.map((item) => (
+        {cartItems?.map((item) => (
           <Flex
             key={item.id}
             flexDirection={{ base: 'column', md: 'row' }}
@@ -166,26 +120,26 @@ const Cart = () => {
               <Image src={item.image} alt={item.name} boxSize="80px" mr={4} />
               <Text fontWeight="bold">{item.name}</Text>
             </Flex>
-            <Text>${item.price.toFixed(2)}</Text>
+            <Text>₹.{item.price.toFixed(2)} </Text>
             <Box
               cursor="pointer"
               color="red.500"
               fontWeight="bold"
-              // onClick={() => handleDelete(item.id)}
+               onClick={() => handleDelete(item.id)}
             >
               Delete
             </Box>
           </Flex>
         ))}
         <Box fontSize="20px" mt={4} textAlign="right" w="100%">
-          Total: ${getTotalPrice().toFixed(2)}
+          Total: ₹.{getTotalPrice().toFixed(2)}
         </Box>
         </VStack>
         
-        <VStack>
+        <VStack  >
         {/* Order Summary Section */}
         {cartItems.length > 0 && (
-        <Box w="100%" p={4} borderWidth={1} borderRadius={6}>
+        <Box w="100%" p={4} borderWidth={1} borderRadius={6} >
         <Box fontSize="24px" fontWeight="bold" mb={4} textAlign="center" w="100%">
           Order Summary
         </Box>
@@ -198,7 +152,7 @@ const Cart = () => {
          
           <Flex justifyContent="space-between" mb={2}>
             <Text>Promo Code Discount (10% off):</Text>
-            <Text color="green.500">-${(getTotalPrice() - discountedPrice).toFixed(2)}</Text>
+            <Text color="green.500">-₹.{(getTotalPrice() - discountedPrice).toFixed(2)}</Text>
           </Flex>
         )}
         <Flex justifyContent="space-between" alignItems="center" gap={4} mt={4}>
@@ -214,7 +168,7 @@ const Cart = () => {
          </Flex>
         <Flex justifyContent="space-between" mb={2}>
           <Text>Discounted Price:</Text>
-          <Text>${discountedPrice !== null ? discountedPrice.toFixed(2) : getTotalPrice().toFixed(2)}</Text>
+          <Text>₹{discountedPrice !== null ? discountedPrice.toFixed(2) : getTotalPrice().toFixed(2)}</Text>
         </Flex>
         
         {promoCode && (
@@ -225,13 +179,13 @@ const Cart = () => {
         
         <Flex justifyContent="space-between" mb={2}>
           <Text>Total Price:</Text>
-          <Text>${getTotalPrice().toFixed(2)}</Text>
+          <Text>₹{getTotalPrice().toFixed(2)}</Text>
         </Flex>
         
         
         <Flex justifyContent="space-between" mb={2}>
           <Text>Shipping:</Text>
-          <Text>$5.00</Text>
+          <Text>₹5.00</Text>
         </Flex>
         <Flex justifyContent="space-between" mb={2}>
           <Text>Estimated Delivery Date:</Text>
@@ -239,7 +193,7 @@ const Cart = () => {
         </Flex>
         <Flex justifyContent="space-between" mb={2}>
           <Text>Total Price with Shipping:</Text>
-          <Text>${getTotalPriceWithShipping().toFixed(2)}</Text>
+          <Text>₹{getTotalPriceWithShipping().toFixed(2)}</Text>
         </Flex>
         <Button colorScheme="blue" w="100%" mt={4} onClick={handleClick}> 
           Proceed to Checkout

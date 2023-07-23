@@ -5,6 +5,7 @@ import { SignupPage } from "../pages/SignupPage";
 import Payment from "../pages/Payment";
 import LoginPage from "../pages/LoginPage";
 import Landing from "../components/landing/Landing"
+import FavoriteItemsPage from "../pages/Favourite";
 const AllRoutes = () => {
   return (
     <Routes>
@@ -14,6 +15,7 @@ const AllRoutes = () => {
       <Route path="/register" element={<SignupPage />} />
       <Route path="/pay" element={<Payment />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/fav" element={<FavoriteItemsPage />} />
     </Routes>
   );
 };
