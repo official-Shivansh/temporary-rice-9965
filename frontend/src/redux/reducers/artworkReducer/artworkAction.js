@@ -133,10 +133,11 @@ export const patchArt = (id, data) => (dispatch) => {
 export async function getProductById(productId) {
   try {
     console.log(config);
-    const response = await fetch(`${url}/${productId}`, config);
+    const response = await fetch(`${url}/arts/${productId}`, config);
 
     if (response.ok) {
       const productData = await response.json();
+      console.log("product data", productData);
       return productData;
     } else if (response.status === 404) {
       return null; // Product with the specified ID not found
@@ -163,3 +164,38 @@ export const handleLike = async (id, userId) => {
     console.error("Error liking/unliking artwork:", error);
   }
 };
+
+// script.js
+export async function postComment(postId, commentText) {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("inside post comment function", user);
+  try {
+    // Prepare the request data
+
+    const requestData = {
+      createdby: user.name,
+      comment_text: commentText,
+      comment_creator_img: user.profilePicture,
+    };
+
+    // Send the POST request to your backend API
+    const response = await axios.post(
+      `${url}/arts/${postId}/comments`,
+      requestData,
+      config
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getComments(postId) {
+  try {
+    // Replace 'yourApiEndpoint' with the actual endpoint to get comments for a post
+    return await axios.get(`${url}/arts/${postId}/comments`, config);
+  } catch (error) {
+    throw error;
+  }
+}

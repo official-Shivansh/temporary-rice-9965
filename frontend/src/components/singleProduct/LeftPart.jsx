@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Box, Image, Button, Flex, useToast, Text } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
-import { TbCurrencyDollar } from "react-icons/tb";
 import ArtistDetails from "./ArtistDetails";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction";
 import { addItemToCart, addItemToFavourite } from "../../redux/Cart/action";
 import { Link } from "react-router-dom";
+// import { fetchAllArts, getProductById } from "../../redux/reducers/artworkReducer/artworkAction";
 
 export default function LeftPart() {
   const dispatch = useDispatch();
@@ -26,6 +26,21 @@ export default function LeftPart() {
     const item = products?.find((element) => element._id === id);
     setProduct(item);
   }, [id, products]);
+// =======
+
+//     // const item = products?.find((element) => element._id === id);
+//     let item = getProductById(id).then((res) => {
+//       console.log("res is", res.art)
+//       setProduct(res.art)
+//     })
+//     console.log("item inside useEffect item is", item)
+
+//     console.log("item is", item)
+//   }, [id]);
+
+//   console.log("single product", product)
+
+// >>>>>>> main
 
   const handleAddToCart = () => {
     toastIdRef.current = toast({

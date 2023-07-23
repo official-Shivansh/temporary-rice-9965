@@ -7,20 +7,17 @@ const { userRouter } = require("./routes/userRoute");
 const { authMiddleware } = require("./middleware/auth.middleware");
 const { cartRouter } = require("./routes/cartRoute");
 const { favouriteRouter } = require("./routes/favouriteRoute");
-
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.get("/", (req, res) => {
   res.status(200).send(`Welcome to Homepage`);
 });
-
 app.use("/users", userRouter);
 app.use("/arts", artworkRouter);
 app.use(authMiddleware);
 app.use("/cart", cartRouter);
 app.use("/favourite", favouriteRouter);
-
 app.listen(process.env.port, async () => {
   try {
     await connection;
