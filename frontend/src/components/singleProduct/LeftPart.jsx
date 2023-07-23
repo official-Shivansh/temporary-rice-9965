@@ -14,12 +14,12 @@ let artistData = {
 };
 
 export default function LeftPart() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(artistData.isFavorite);
 
-  useEffect(()=>{
-    dispatch(fetchAllArts)
-  },[])
+  useEffect(() => {
+    dispatch(fetchAllArts);
+  }, []);
 
   const handleToggleFavorite = () => {
     setIsFavorite(!isFavorite);
@@ -29,14 +29,11 @@ export default function LeftPart() {
   const [product, setProduct] = useState({});
   const products = useSelector((store) => store.artworkReducer.allarts.arts);
 
-  // console.log(products, "products")
   useEffect(() => {
     const item = products?.find((element) => element._id === id);
-    setProduct(item)
-    console.log("item is", item)
-  }, [id]);
 
-  console.log("single product", id, product, products)
+    setProduct(item);
+  }, [id, products]);
 
   // const handleToggleFavorite = () => {
   //   // Toggle the favorite status of the artist
@@ -52,11 +49,7 @@ export default function LeftPart() {
   return (
     <Box>
       <Box className="image">
-        <Image
-          m="auto"
-          className="img"
-          src={product?.image}
-        />
+        <Image m="auto" className="img" src={product?.image} />
       </Box>
       <Box m="9" mt="4">
         {/* likePurchaseBtn */}
@@ -85,7 +78,6 @@ export default function LeftPart() {
             // size="sm"
             colorScheme="white"
             color="black"
-            // rightIcon={<TbCurrencyDollar />}
             sx={{
               _hover: {
                 backgroundColor: "#319795",
