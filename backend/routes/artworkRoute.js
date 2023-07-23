@@ -5,19 +5,24 @@ const artworkRouter = Router();
 const { authMiddleware } = require("../middleware/auth.middleware");
 
 artworkRouter.get("/getarts", async (req, res) => {
+  let { title, creator_name } = req.query;
   try {
-    const query = {};
-    let { title } = req.query;
-    if (title) {
+    let query = {};
+    if (title && creator_name) {
+      query = { title, creator_name };
+    } else if (title) {
       query.title = { $regex: title, $options: "i" };
+    } else if (creator_name) {
+      query.creator_name = { $regex: creator_name, $options: "i" };
     }
     let arts = await ArtworkModel.find(query);
-    console.log("here inside getarts arts", arts);
+    console.log("here inside get arts", arts);
     res.status(200).send({ msg: "All arts fetched", arts });
   } catch (error) {
     res.status(400).send({ error: error.message });
   }
 });
+
 // Restricted Routes start here
 artworkRouter.use(authMiddleware);
 artworkRouter.post("/addart", async (req, res) => {
@@ -139,21 +144,21 @@ artworkRouter.get("/:id", async (req, res) => {
 artworkRouter.post("/:id/like", async (req, res) => {
   try {
     const artworkId = req.params.id;
-console.log("inside like artworkId", artworkId)
+    console.log("inside like artworkId", artworkId)
     // Find the artwork document by its ID
     const artwork = await ArtworkModel.findById(artworkId);
-console.log("inside like artwork", artwork);
+    console.log("inside like artwork", artwork);
     if (!artwork) {
       return res.status(404).json({ error: "Artwork not found" });
     }
 
     // Assuming you have some form of authentication, get the user's ID who liked the artwork
     const userId = req.userId; // Change this based on your authentication method
-console.log("inside like userId", userId);
+    console.log("inside like userId", userId);
     // Check if the user has already liked the artwork
-        const userIndex = artwork.likes.indexOf(userId);
+    const userIndex = artwork.likes.indexOf(userId);
     if (artwork.likes.includes(userId)) {
-       artwork.likes.splice(userIndex, 1);
+      artwork.likes.splice(userIndex, 1);
       await artwork.save();
       return res.status(400).json({
         error: "User already liked this artwork, so unliking now",
