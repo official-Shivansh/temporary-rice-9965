@@ -4,7 +4,6 @@ import CartPage from "./components/Cart/cart";
 import AllRoutes from "./routes/AllRoutes";
 
 import { useLocation } from "react-router-dom";
-import SingleProduct from "./pages/SingleProduct";
 
 function App() {
   const location = useLocation();
