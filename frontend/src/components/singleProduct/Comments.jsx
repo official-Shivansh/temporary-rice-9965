@@ -1,32 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Flex, Avatar, Text, IconButton, Input } from "@chakra-ui/react";
-import { FaLocationArrow,FaRegCommentAlt } from "react-icons/fa";
+import { FaLocationArrow, FaRegCommentAlt } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { postComment, getComments } from "../../redux/reducers/artworkReducer/artworkAction";
 
 const imageData = {
   imageUrl: "https://example.com/artwork.jpg",
   comments: [
-    { user: "user1", comment: "This is beautiful!" },
-    { user: "user2", comment: "Amazing artwork!" },
-    { user: "user1", comment: "Great job!" },
+    { user: "Monika", comment: "This is beautiful!", profilePicture: `https://e1.pxfuel.com/desktop-wallpaper/932/598/desktop-wallpaper-cartoon-dp-girl-for-whatsapp-instagram-dp-girl.jpg` },
+    { user: "Gaby", comment: "Amazing artwork!", profilePicture: 'https://e1.pxfuel.com/desktop-wallpaper/886/876/desktop-wallpaper-top-35-sad-girl-pics-for-whatsapp-sad-alone-girls-for-whatsapp-dp-girls-whatsapp-dp.jpg' },
+    { user: "Justin", comment: "Great job!", profilePicture: "https://veenanews.in/wp-content/uploads/2023/04/14451fcffeebdf14ab11c3c47b37ee9b.jpg" },
   ],
   likes: 42,
 };
 
 export default function Comments() {
-  const [comments, setComments] = useState(imageData.comments);
+
+  const [reload, setReload] = useState(0)
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  
-  const handleAddComment = () => {
-    if (newComment.trim() !== "") {
-      const updatedComments = [
-        ...comments,
-        { user: "Your Name", comment: newComment },
-      ];
-      setComments(updatedComments);
-      setNewComment("");
-    }
+  const { id } = useParams()
+
+  const user = JSON.parse(localStorage.getItem("user"))
+
+  const handleAddComment = async () => {
+    // if (newComment.trim() !== "") {
+    //   const updatedComments = [
+    //     ...comments,
+    //     { user: user.name, comment: newComment, profilePicture: user.profilePicture },
+    //   ];
+    //   setComments(updatedComments);
+    //   setNewComment("");
+    // }
+    await postComment(id, newComment); // Assuming postComment is an async function
+    setNewComment("");
+    setReload(reload + 1);
+
   };
 
+  useEffect(() => {
+    let commentData = getComments(id).then((res) => {
+      console.log("res inside use effect ", res)
+      setComments(res.data)
+    })
+
+
+  }, [newComment, reload])
+
+  console.log("comments", comments)
   return (
     <Box>
       <Flex>
@@ -35,7 +56,7 @@ export default function Comments() {
           aria-label="Comment"
           // size="sm"
           variant="ghost"
-          // color="gray.600"
+        // color="gray.600"
         />
         <Text m="auto" ml="2" as="b">
           Comments
@@ -43,15 +64,15 @@ export default function Comments() {
       </Flex>
       {/* Comments */}
       <Box mt="4">
-        {comments.map((comment, index) => (
+        {comments?.map((comment, index) => (
           <Flex key={index} align="center" mt="2">
             <Avatar
               size="sm"
               name={comment.user}
-              src={`https://i.pravatar.cc/40?u=${comment.user}`}
+              src={comment.comment_creator_img}
             />
             <Text ml="2" fontSize="sm">
-              <strong>{comment.user}:</strong> {comment.comment}
+              <strong>{comment.createdby}:</strong> {comment.comment_text}
             </Text>
           </Flex>
         ))}
@@ -63,7 +84,7 @@ export default function Comments() {
           size="sm"
           m="auto"
           name="Your Name"
-          src="https://i.pravatar.cc/40?u=yourname"
+          src={user.profilePicture}
         />
         <Box ml="2" flex="1">
           <Input
