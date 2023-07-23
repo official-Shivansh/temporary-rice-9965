@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
-import {
-  Image,
-  Box,
-  Flex,
-  Button,
-  Heading,
-  Text,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
-import BgVideo from "../images/background.mp4";
-import BgVideo2 from "../images/background2.mp4";
-import { Search2Icon } from "@chakra-ui/icons";
-import YouTube from "react-youtube";
+
+import React, { useEffect, useState } from 'react'
+import { Image, Box, Flex, Button, Heading, Text, Input, InputGroup, InputLeftElement, Grid, GridItem } from '@chakra-ui/react'
+import BgVideo from "../images/background.mp4"
+import BgVideo2 from "../images/background2.mp4"
+import { Search2Icon } from '@chakra-ui/icons'
+import YouTube from 'react-youtube';
+ from "react-youtube";
+
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction";
@@ -23,8 +14,27 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { url } from "../url";
 function Container() {
+
+    const opts = {
+        height: '130%',
+        width: '100%',
+
+    };
+
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+
+        dispatch(fetchAllArts)
+    }, [])
+
+
+//     const products = useSelector((store => store.artworkReducer.allarts.arts))
+//     console.log("inside homepage products", products)
+ 
+
   const [search, setSearch] = useState();
-  const product = useSelector((store) => store.artworkReducer.allarts.arts);
+  
     const [products, setProducts] = useState(product);
   const opts = {
     height: "130%",
@@ -76,70 +86,20 @@ function Container() {
           alignItems={"center"}
           color={"white"}
         >
-          <Flex width={"100%"} justify={"center"}>
-            <Flex
-              w={"60%"}
-              flexWrap={"wrap"}
-              justifyContent={"space-evenly"}
-              gap={"2%"}
-            >
-              <Button
-                borderRadius={"20px"}
-                background={"rgba(0, 0, 0, .2)"}
-                _hover={{ color: "black", bgColor: "white" }}
-                color={"white"}
-              >
-                <Text size={"md"}>Discover</Text>
-              </Button>
-              <Button
-                borderRadius={"20px"}
-                background={"rgba(0, 0, 0, .2)"}
-                _hover={{ color: "black", bgColor: "white" }}
-                color={"white"}
-              >
-                <Text size={"md"}>Animation</Text>
-              </Button>
-              <Button
-                borderRadius={"20px"}
-                background={"rgba(0, 0, 0, .2)"}
-                _hover={{ color: "black", bgColor: "white" }}
-                color={"white"}
-              >
-                <Text size={"md"}>Branding</Text>
-              </Button>
-              <Button
-                borderRadius={"20px"}
-                background={"rgba(0, 0, 0, .2)"}
-                _hover={{ color: "black", bgColor: "white" }}
-                color={"white"}
-              >
-                <Text size={"md"}>Illustration</Text>
-              </Button>
-              <Button
-                borderRadius={"20px"}
-                background={"rgba(0, 0, 0, .2)"}
-                _hover={{ color: "black", bgColor: "white" }}
-                color={"white"}
-              >
-                <Text size={"md"}>Mobile</Text>
-              </Button>
-              <Button
-                borderRadius={"20px"}
-                background={"rgba(0, 0, 0, .2)"}
-                _hover={{ color: "black", bgColor: "white" }}
-                color={"white"}
-              >
-                <Text size={"md"}>Print</Text>
-              </Button>
-              <Button
-                borderRadius={"20px"}
-                background={"rgba(0, 0, 0, .2)"}
-                _hover={{ color: "black", bgColor: "white" }}
-                color={"white"}
-              >
-                <Text size={"md"}>Product Design</Text>
-              </Button>
-            </Flex>
+         
+            
+                        <Flex w={"60%"} flexWrap={"wrap"} justifyContent={"space-evenly"} gap={"2%"}>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Painting</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Photography</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Branding</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Illustration</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Modern Art</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Typography</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Design</Text></Button>
+
+                        </Flex>
+
+            
           </Flex>
           <Box pt={"3%"}>
             <Heading>Explore the world’s leading </Heading>

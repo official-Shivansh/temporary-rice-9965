@@ -26,7 +26,10 @@ export default function LeftPart() {
     const item = products?.find((element) => element._id === id);
     setProduct(item);
   }, [id, products]);
-// =======
+
+
+
+
 
 //     // const item = products?.find((element) => element._id === id);
 //     let item = getProductById(id).then((res) => {
@@ -40,7 +43,6 @@ export default function LeftPart() {
 
 //   console.log("single product", product)
 
-// >>>>>>> main
 
   const handleAddToCart = () => {
     toastIdRef.current = toast({

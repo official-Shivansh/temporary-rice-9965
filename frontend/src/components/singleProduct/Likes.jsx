@@ -31,17 +31,19 @@ export default function Likes() {
       setProduct(res.art)
     })
     console.log("item is", item)
-  }, [id, liked]);
+  }, [liked]);
 
   function clickingLike() {
 
     console.log("inside clickingLike", userId._id)
-    handleLike(id, userId)
-    setLiked(!liked)
+    handleLike(id, userId).then((res) => {
+      setLiked(!liked)
+    })
+
   }
 
   const totalLikes = product?.likes?.length + 3 * 245
-  console.log("totalLikes", totalLikes, typeof totalLikes)
+
   return (
     <Box>
       <Flex mt="2" align="center" justify="space-between">
@@ -52,7 +54,7 @@ export default function Likes() {
           size="35px"
           variant="ghost"
           onClick={clickingLike}
-          style={{ color: liked === false ? "grey" : "blue" }}
+          style={{ color: liked ? "blue" : "grey" }}
         />
 
 
