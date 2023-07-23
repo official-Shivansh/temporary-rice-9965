@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -11,40 +11,52 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction";
+import { useParams } from "react-router";
 
-let artistData = {
-  name: "John Doe",
-  bio: "Talented artist passionate about creating beautiful art.",
-  isFavorite: false,
-};
-
-let tags = [
-  "artdigital",
-  "artwork",
-  "deviantart",
-  "deviantartist",
-  "digital",
-  "digitalartwork",
-  "digitaldrawing",
-  "digitalpainting",
-  "environment",
-  "fantasyartwork",
-  "fantasylandscape",
-  "landscape",
-  "landscapeart",
-  "landscapescenery",
-  "moody",
-  "mountains",
-  "peaceful",
-  "photoshop",
-  "quiet",
-  "sunset",
-  "wallpaper",
-  "water",
-  "artworkpainting",
-];
+// let tags = [
+//   "artdigital",
+//   "artwork",
+//   "deviantart",
+//   "deviantartist",
+//   "digital",
+//   "digitalartwork",
+//   "digitaldrawing",
+//   "digitalpainting",
+//   "environment",
+//   "fantasyartwork",
+//   "fantasylandscape",
+//   "landscape",
+//   "landscapeart",
+//   "landscapescenery",
+//   "moody",
+//   "mountains",
+//   "peaceful",
+//   "photoshop",
+//   "quiet",
+//   "sunset",
+//   "wallpaper",
+//   "water",
+//   "artworkpainting",
+// ];
 
 export default function ArtistDetails() {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const [artist, setArtist] = useState({});
+  const products = useSelector((store) => store.artworkReducer.allarts.arts);
+
+  useEffect(() => {
+    dispatch(fetchAllArts);
+    const item = products?.find((element) => element._id === id);
+    setProduct(item);
+  }, [id, products]);
+
+  
+
   return (
     <Box
       className="artistDetails"
@@ -57,37 +69,31 @@ export default function ArtistDetails() {
       <Flex>
         <Avatar size="" src="https://i.pravatar.cc/40?u=yourname" />
         <Text fontSize="lg" fontWeight="bold" m="auto" ml="3">
-          {artistData.name}
+          {product?.creator_name}
         </Text>
       </Flex>
       <Text className="discription" mt="4">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged.
+        {product?.description}
       </Text>
       <Box className="image details" mt="4">
         <Text as="b">Image details</Text>
-        {/* <Text>Size </Text> */}
         <TableContainer>
           <Table variant="simple">
             <Tbody>
               <Tr>
-                <Td>Size</Td>
-                <Td>3840x2160px</Td>
+                <Td>Size(cm)</Td>
+                <Td>500 x 300</Td>
               </Tr>
               <Tr>
                 <Td>Type of ArtWork</Td>
-                <Td>Sculpture</Td>
+                <Td>{product?.typeOfArtWork}</Td>
               </Tr>
             </Tbody>
           </Table>
         </TableContainer>
       </Box>
       <Box className="tags" display="inline-block" mt="4">
-        {tags.map((el) => (
+        {product?.tags?.map((el) => (
           <Tag
             m="1"
             ml="0"

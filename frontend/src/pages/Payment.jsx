@@ -11,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ const PaymentPage = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [generatedOTP, setGeneratedOTP] = useState('');
   const navigate = useNavigate();
+  const toast = useToast();
 
   const handlePaymentChange = (value) => {
     setPaymentMethod(value);
@@ -32,7 +34,7 @@ const PaymentPage = () => {
       generateOTP();
       setShowOTP(true);
     } else {
-    
+       
     }
   };
 
@@ -40,7 +42,14 @@ const PaymentPage = () => {
     
     const newOTP = Math.floor(1000 + Math.random() * 9000).toString();
     setGeneratedOTP(newOTP);
-    alert(`Generated OTP: ${newOTP}`);
+    
+    toast({
+      title: 'OTP Generated',
+      description: `Your OTP is: ${newOTP}`,
+      status: 'success',
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   const handleOTPSubmit = () => {
@@ -54,7 +63,7 @@ const PaymentPage = () => {
   };
 
   const handleOrderPlace = () => {
-    navigate("/cart")
+    navigate("/")
     
   };
   const handleOrderPlaced = () => {
@@ -72,7 +81,7 @@ const PaymentPage = () => {
           <Box p={8} borderWidth={1} borderRadius="md" shadow="md">
             <Heading mb={4}>Order Placed Successfully!</Heading>
             <Text>Your payment has been successful. Thank you for your order!</Text>
-            <Button mt={4} colorScheme="teal" onClick={handleOrderPlace}>
+            <Button mt={4} colorScheme="blue" onClick={handleOrderPlace}>
               Place Another Order
             </Button>
           </Box>
@@ -111,7 +120,7 @@ const PaymentPage = () => {
                   </FormControl>
                 </RadioGroup>
 
-                <Button mt={4} colorScheme="teal" onClick={handlePayNow}>
+                <Button mt={4} colorScheme="blue" onClick={handlePayNow}>
                   Pay Now
                 </Button>
               </>
@@ -128,7 +137,7 @@ const PaymentPage = () => {
                   />
                 </FormControl>
 
-                <Button mt={4} colorScheme="teal" onClick={handleOTPSubmit}>
+                <Button mt={4} colorScheme="blue" onClick={handleOTPSubmit}>
                   Submit OTP
                 </Button>
               </>

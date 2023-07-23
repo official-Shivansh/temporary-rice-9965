@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
-import { getProductById } from "../../redux/reducers/artworkReducer/artworkAction"
+import { patchArt } from "../../redux/reducers/artworkReducer/artworkAction"
 
 const EditProduct = () => {
 
     const { id } = useParams()
-
+    let navigate = useNavigate()
+    const dispatch = useDispatch()
     const [product, setProduct] = useState({})
     const [price, setPrice] = useState(0)
     const [type, setType] = useState("")
@@ -15,8 +16,6 @@ const EditProduct = () => {
 
 
     const products = useSelector((store => store.artworkReducer.arts.arts))
-
-    console.log("products", products)
 
     useEffect(() => {
         const item = products.find((element) => element._id === id)
@@ -27,15 +26,13 @@ const EditProduct = () => {
         setTitle(item.title)
     }, [id, products])
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+
+
 
     const handleEdit = () => {
-        // let data = { price: +price, type, title }
-        // dispatch(patchArtwork(id, data))
-        //     .then((res) => {
-        //         navigate("/profile")
-        //     })
+        let data = { price: +price, type, title }
+        dispatch(patchArt(id, data))
+        navigate("/profile")
     }
 
 
@@ -69,7 +66,7 @@ const EditProduct = () => {
             marginLeft: "50px"
         },
         label: {
-            marginBottom: "5px",
+            margin: "5px",
             fontWeight: "600"
         },
         button: {
@@ -84,15 +81,40 @@ const EditProduct = () => {
             transition: "background-color 0.2s",
         },
         box: {
-            border: "1px solid grey"
+            border: "1px solid grey",
+            padding: "5px",
+            borderRadius: "3px"
+        },
+        img: {
+            width: "300px"
         }
     };
+
+
+    // Add media queries for responsiveness
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth < 768) {
+        // Adjust styles for small screens (less than 768px wide)
+        styles.container.flexDirection = 'column';
+        styles.input.width = '100%';
+        styles.input.marginRight = '0';
+        styles.input.marginLeft = '0';
+        styles.input.maxWidth = '400px';
+
+    } else if (screenWidth < 992) {
+        // Adjust styles for medium screens (between 768px and 991px wide)
+        styles.container.flexDirection = 'row';
+        styles.container.flexWrap = 'wrap';
+        styles.input.marginRight = '10px';
+        styles.input.marginLeft = '10px';
+
+    }
     return (
         <div style={styles.container}>
-
-            <img alt='imageInEdit' src='https://as2.ftcdn.net/v2/jpg/03/01/92/83/1000_F_301928370_bqDFDLxE9YsS3nTsukbDkwXqKK2xwqXO.jpg' style={{ width: "300px" }} />
+            <img alt='imageInEdit' src='https://as2.ftcdn.net/v2/jpg/03/01/92/83/1000_F_301928370_bqDFDLxE9YsS3nTsukbDkwXqKK2xwqXO.jpg' style={styles.img} />
             <div style={styles.input} >
-                <h1 style={styles.title}>Editing: {product.title}</h1>
+                <h2 style={styles.title}>Editing: {product.title}</h2>
                 <label style={styles.label}>Title:</label>
                 <input type='text' style={styles.box} value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Product Title" />
                 <label style={styles.label}>Price:</label>
@@ -101,7 +123,7 @@ const EditProduct = () => {
                 <input type='text' style={styles.box} value={type} onChange={(e) => setType(e.target.value)} placeholder="Product Type" />
                 <button style={styles.button} onClick={handleEdit}>Update</button>
             </div>
-            <img alt='imageInEdit' src='https://media.istockphoto.com/id/1058684612/vector/man-artist-painting-autumn-tree-landscape-in-the-park-isolated-vector-illustration-scene.jpg?s=2048x2048&w=is&k=20&c=j6mtlZJTJdYBHuBqU3W5PdK69xXIngE9pSMATem_UpI=' style={{ width: "300px" }} />
+
         </div>
 
     )
