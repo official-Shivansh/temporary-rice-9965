@@ -4,7 +4,8 @@ import { FaHeart } from "react-icons/fa";
 import { TbCurrencyDollar } from "react-icons/tb";
 import ArtistDetails from "./ArtistDetails";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction";
 
 let artistData = {
   name: "John Doe",
@@ -14,6 +15,7 @@ let artistData = {
 
 export default function LeftPart() {
   const [isFavorite, setIsFavorite] = useState(artistData.isFavorite);
+  const dispatch = useDispatch();
 
   const handleToggleFavorite = () => {
     setIsFavorite(!isFavorite);
@@ -24,11 +26,15 @@ export default function LeftPart() {
   const products = useSelector((store) => store.artworkReducer.allarts.arts);
 
   useEffect(() => {
-    const item = products.find((element) => element._id === id);
+    dispatch(fetchAllArts);
+  }, []);
+
+  useEffect(() => {
+    const item = products?.find((element) => element._id === id);
     setProduct(item);
   }, [id]);
 
-  console.log(product, "products")
+  console.log(product, "products");
 
   // const handleToggleFavorite = () => {
   //   // Toggle the favorite status of the artist
@@ -77,7 +83,6 @@ export default function LeftPart() {
             // size="sm"
             colorScheme="white"
             color="black"
-            // rightIcon={<TbCurrencyDollar />}
             sx={{
               _hover: {
                 backgroundColor: "#319795",
