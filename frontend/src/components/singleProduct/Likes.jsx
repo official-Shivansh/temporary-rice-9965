@@ -1,10 +1,11 @@
 import React from "react";
 import { Box, Flex, IconButton, Badge } from "@chakra-ui/react";
-import { FaHeart } from "react-icons/fa";
+import { FaThumbsUp } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { handleLike } from "../../redux/reducers/artworkReducer/artworkAction";
+import { getProductById, handleLike } from "../../redux/reducers/artworkReducer/artworkAction";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { color } from "framer-motion";
 const imageData = {
   imageUrl: "https://example.com/artwork.jpg",
   comments: [
@@ -19,34 +20,43 @@ export default function Likes() {
 
   const { id } = useParams();
   const userId = JSON.parse(localStorage.getItem("user"))
-
+  const [liked, setLiked] = useState(false)
   const [product, setProduct] = useState({});
   const products = useSelector((store) => store.artworkReducer.allarts.arts);
 
   // console.log(products, "products")
   useEffect(() => {
-    const item = products?.find((element) => element._id === id);
-    setProduct(item)
+    let item = getProductById(id).then((res) => {
+      console.log("res is", res.art)
+      setProduct(res.art)
+    })
     console.log("item is", item)
-  }, [id]);
+  }, [id, liked]);
 
   function clickingLike() {
 
     console.log("inside clickingLike", userId._id)
     handleLike(id, userId)
+    setLiked(!liked)
   }
+
+  const totalLikes = product?.likes?.length + 3 * 245
+  console.log("totalLikes", totalLikes, typeof totalLikes)
   return (
     <Box>
       <Flex mt="2" align="center" justify="space-between">
+
         <IconButton
-          icon={<FaHeart />}
+          icon={< FaThumbsUp />}
           aria-label="Like"
-          // size="sm"
+          size="35px"
           variant="ghost"
-          color="gray.600"
           onClick={clickingLike}
+          style={{ color: liked === false ? "grey" : "blue" }}
         />
-        <Badge colorScheme="pink">{product?.likes?.length} Likes</Badge>
+
+
+        <Badge colorScheme="pink">{totalLikes} Likes</Badge>
       </Flex>
     </Box>
   );

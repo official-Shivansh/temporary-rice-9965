@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { ArtworkModel } = require("../models/artworkModel");
+const { CommentModel } = require("../models/commentModel");
 const artworkRouter = Router();
 
 const { authMiddleware } = require("../middleware/auth.middleware");
@@ -25,6 +26,27 @@ artworkRouter.get("/getarts", async (req, res) => {
 
 // Restricted Routes start here
 artworkRouter.use(authMiddleware);
+// getting a single product
+
+artworkRouter.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const art = await ArtworkModel.findById(id);
+
+    // const artCretorId = art.creator.toString();
+
+    console.log("id", id);
+
+    res.status(200).send({
+      msg: "Post fetched according to paramId successfully",
+      art,
+    });
+    return;
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+
 artworkRouter.post("/addart", async (req, res) => {
   console.log("inside /addart route", req.body);
   try {
@@ -118,33 +140,13 @@ artworkRouter.delete("/:id", async (req, res) => {
   }
 });
 
-// getting a single product
-
-artworkRouter.get("/:id", async (req, res) => {
-  try {
-    const userId = req.userId;
-    const { id } = req.params;
-    const art = await ArtworkModel.findById(id);
-
-    // const artCretorId = art.creator.toString();
-
-    console.log("id", id, "userId", userId, "artcreatorId", artCretorId);
-
-    res.status(200).send({
-      msg: "Post updated successfully",
-      art,
-    });
-  } catch (error) {
-    res.status(400).send({ error: error.message });
-  }
-});
-
-
 // Define a route to add a like to the artwork document
 artworkRouter.post("/:id/like", async (req, res) => {
   try {
     const artworkId = req.params.id;
+
     console.log("inside like artworkId", artworkId)
+
     // Find the artwork document by its ID
     const artwork = await ArtworkModel.findById(artworkId);
     console.log("inside like artwork", artwork);
@@ -160,9 +162,9 @@ artworkRouter.post("/:id/like", async (req, res) => {
     if (artwork.likes.includes(userId)) {
       artwork.likes.splice(userIndex, 1);
       await artwork.save();
-      return res.status(400).json({
+      return res.status(200).json({
         error: "User already liked this artwork, so unliking now",
-        artwork
+        artwork,
       });
     }
 
@@ -173,10 +175,71 @@ artworkRouter.post("/:id/like", async (req, res) => {
     await artwork.save();
 
     res.status(200).json({
-      message: "Artwork liked successfully", artwork
+      message: "Artwork liked successfully",
+      artwork,
     });
   } catch (err) {
     console.error(err);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+// Post a new comment for a single post
+artworkRouter.post("/:id/comments", async (req, res) => {
+  try {
+    const userImg = req.body.comment_creator_img;
+
+    const postId = req.params.id;
+    const commentText = req.body.comment_text;
+    const userId = req.userId; // Assuming you've set the userId in the request object
+    // Find the post
+    const post = await ArtworkModel.findById(postId);
+    console.log("post inside post comments", post);
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+    const commentData = {
+      createdby: req.body.createdby,
+      comment_creator_img: userImg,
+      comment_text: commentText,
+      comment_creator: userId,
+    };
+    //Create a new comment and automatically capture the user ID
+    const newComment = await CommentModel.create(commentData);
+    console.log("new comment", newComment);
+    post.comments.push(newComment);
+    console.log("post before saving", post);
+    await post.save();
+    res.status(201).json({
+      message: "Comment posted successfully",
+      newComment,
+      commentData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Something went wrong",
+      err: error.message,
+      errorStack: error.stack,
+    });
+  }
+});
+
+// Get comments for a single post
+artworkRouter.get("/:id/comments", async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    // Find the post
+    const post = await ArtworkModel.findById(postId)
+      .populate("comments", "-__v") // This will populate the comments with their details while excluding the '__v' field
+      .exec();
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    res.json(post.comments);
+  } catch (error) {
     res.status(500).json({ error: "Something went wrong" });
   }
 });

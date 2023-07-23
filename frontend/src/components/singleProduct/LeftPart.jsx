@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Image, Button, Flex } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
-import { TbCurrencyDollar } from "react-icons/tb";
 import ArtistDetails from "./ArtistDetails";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction";
+import { fetchAllArts, getProductById } from "../../redux/reducers/artworkReducer/artworkAction";
 
 let artistData = {
   name: "John Doe",
@@ -30,10 +29,19 @@ export default function LeftPart() {
   const products = useSelector((store) => store.artworkReducer.allarts.arts);
 
   useEffect(() => {
-    const item = products?.find((element) => element._id === id);
 
-    setProduct(item);
-  }, [id, products]);
+    // const item = products?.find((element) => element._id === id);
+    let item = getProductById(id).then((res) => {
+      console.log("res is", res.art)
+      setProduct(res.art)
+    })
+    console.log("item inside useEffect item is", item)
+
+    console.log("item is", item)
+  }, [id]);
+
+  console.log("single product", product)
+
 
   // const handleToggleFavorite = () => {
   //   // Toggle the favorite status of the artist
