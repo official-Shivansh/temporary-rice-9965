@@ -134,4 +134,47 @@ artworkRouter.get("/:id", async (req, res) => {
   }
 });
 
+
+// Define a route to add a like to the artwork document
+artworkRouter.post("/:id/like", async (req, res) => {
+  try {
+    const artworkId = req.params.id;
+console.log("inside like artworkId", artworkId)
+    // Find the artwork document by its ID
+    const artwork = await ArtworkModel.findById(artworkId);
+console.log("inside like artwork", artwork);
+    if (!artwork) {
+      return res.status(404).json({ error: "Artwork not found" });
+    }
+
+    // Assuming you have some form of authentication, get the user's ID who liked the artwork
+    const userId = req.userId; // Change this based on your authentication method
+console.log("inside like userId", userId);
+    // Check if the user has already liked the artwork
+        const userIndex = artwork.likes.indexOf(userId);
+    if (artwork.likes.includes(userId)) {
+       artwork.likes.splice(userIndex, 1);
+      await artwork.save();
+      return res.status(400).json({
+        error: "User already liked this artwork, so unliking now",
+        artwork
+      });
+    }
+
+    // Add the user's ID to the "likes" array
+    artwork.likes.push(userId);
+
+    // Save the updated artwork document
+    await artwork.save();
+
+    res.status(200).json({
+      message: "Artwork liked successfully", artwork
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+
 module.exports = { artworkRouter };
