@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -11,37 +11,50 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllArts } from "../../redux/reducers/artworkReducer/artworkAction";
+import { useParams } from "react-router";
 
+// let tags = [
+//   "artdigital",
+//   "artwork",
+//   "deviantart",
+//   "deviantartist",
+//   "digital",
+//   "digitalartwork",
+//   "digitaldrawing",
+//   "digitalpainting",
+//   "environment",
+//   "fantasyartwork",
+//   "fantasylandscape",
+//   "landscape",
+//   "landscapeart",
+//   "landscapescenery",
+//   "moody",
+//   "mountains",
+//   "peaceful",
+//   "photoshop",
+//   "quiet",
+//   "sunset",
+//   "wallpaper",
+//   "water",
+//   "artworkpainting",
+// ];
 
+export default function ArtistDetails() {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const [artist, setArtist] = useState({});
+  const products = useSelector((store) => store.artworkReducer.allarts.arts);
 
-let tags = [
-  "artdigital",
-  "artwork",
-  "deviantart",
-  "deviantartist",
-  "digital",
-  "digitalartwork",
-  "digitaldrawing",
-  "digitalpainting",
-  "environment",
-  "fantasyartwork",
-  "fantasylandscape",
-  "landscape",
-  "landscapeart",
-  "landscapescenery",
-  "moody",
-  "mountains",
-  "peaceful",
-  "photoshop",
-  "quiet",
-  "sunset",
-  "wallpaper",
-  "water",
-  "artworkpainting",
-];
+  useEffect(() => {
+    dispatch(fetchAllArts);
+    const item = products?.find((element) => element._id === id);
+    setProduct(item);
+  }, [id, products]);
 
-export default function ArtistDetails(props) {
-  console.log("props inside artistDetails", props)
   return (
     <Box
       className="artistDetails"
@@ -54,32 +67,31 @@ export default function ArtistDetails(props) {
       <Flex>
         <Avatar size="" src="https://i.pravatar.cc/40?u=yourname" />
         <Text fontSize="lg" fontWeight="bold" m="auto" ml="3">
-          {props.creator_name}
+          {product?.creator_name}
         </Text>
       </Flex>
       <Text className="discription" mt="4">
-        {props.description}
+        {product?.description}
       </Text>
       <Box className="image details" mt="4">
         <Text as="b">Image details</Text>
-        {/* <Text>Size </Text> */}
         <TableContainer>
           <Table variant="simple">
             <Tbody>
               <Tr>
-                <Td>Size</Td>
-                <Td>3840x2160px</Td>
+                <Td>Size(cm)</Td>
+                <Td>500 x 300</Td>
               </Tr>
               <Tr>
                 <Td>Type of ArtWork</Td>
-                <Td>{props.typeOfArtWork}</Td>
+                <Td>{product?.typeOfArtWork}</Td>
               </Tr>
             </Tbody>
           </Table>
         </TableContainer>
       </Box>
       <Box className="tags" display="inline-block" mt="4">
-        {tags.map((el) => (
+        {product?.tags?.map((el) => (
           <Tag
             m="1"
             ml="0"

@@ -4,11 +4,8 @@ import ProfilePage from "../pages/ProfilePage";
 import { SignupPage } from "../pages/SignupPage";
 import Payment from "../pages/Payment";
 import LoginPage from "../pages/LoginPage";
-
-import Landing from "../components/landing/Landing"
 import FavoriteItemsPage from "../pages/Favourite";
-
-
+import Landing from "../components/landing/Landing";
 import SingleProduct from "../pages/SingleProduct";
 import EditProduct from "../components/artwork/EditArtwork";
 
@@ -21,12 +18,9 @@ const AllRoutes = () => {
       <Route path="/register" element={<SignupPage />} />
       <Route path="/pay" element={<Payment />} />
       <Route path="/login" element={<LoginPage />} />
-
       <Route path="/fav" element={<FavoriteItemsPage />} />
       <Route path="/product/:id" element={<SingleProduct />} />
-    // <Route path="/art" element={<SingleProduct />} />
       <Route path="/arts/:id/edit" element={<EditProduct />} />
-
     </Routes>
   );
 };
