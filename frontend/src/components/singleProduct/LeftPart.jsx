@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from "react";
-
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Text,
-  Box,
-  Image,
-  Button,
-  Flex,
-  Avatar,
-} from "@chakra-ui/react";
-
-import { FaHeart, FaComment } from "react-icons/fa";
+import { Box, Image, Button, Flex } from "@chakra-ui/react";
+import { FaHeart } from "react-icons/fa";
 import { TbCurrencyDollar } from "react-icons/tb";
 import ArtistDetails from "./ArtistDetails";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 let artistData = {
   name: "John Doe",
@@ -29,6 +18,17 @@ export default function LeftPart() {
   const handleToggleFavorite = () => {
     setIsFavorite(!isFavorite);
   };
+
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const products = useSelector((store) => store.artworkReducer.allarts.arts);
+
+  useEffect(() => {
+    const item = products.find((element) => element._id === id);
+    setProduct(item);
+  }, [id]);
+
+  console.log(product, "products")
 
   // const handleToggleFavorite = () => {
   //   // Toggle the favorite status of the artist
@@ -85,7 +85,7 @@ export default function LeftPart() {
               },
             }}
           >
-            Purchase for <TbCurrencyDollar/> 1.8
+            Purchase for <TbCurrencyDollar /> 1.8
           </Button>
         </Flex>
 
