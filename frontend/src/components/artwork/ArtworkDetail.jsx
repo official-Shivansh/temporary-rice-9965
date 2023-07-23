@@ -99,6 +99,7 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork, h
                     <Flex justifyContent={"flex-end"}>
                         <Button
                             mr={1}>
+                            <Link to={`/arts/${_id}/edit`}>
                             <Tooltip
                                 label="Edit details"
                                 bg="white"
@@ -108,7 +109,8 @@ const ArtworkDetail = ({ _id, title, image, price, description, typeOfArtWork, h
                                 <chakra.a href={'#'} display={'flex'}>
                                     <Icon as={AiTwotoneEdit} h={6} w={8} alignSelf={'center'} color={'#0066FF'} />
                                 </chakra.a>
-                            </Tooltip>
+                                </Tooltip>
+                            </Link>
                         </Button>
                         <Button onClick={() => handleDelete(_id)}>
                             <Tooltip

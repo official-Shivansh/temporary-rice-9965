@@ -8,11 +8,13 @@ import {
   DELETE_ART_FAILURE,
   DELETE_ART_REQUEST,
   DELETE_ART_SUCCESS,
+  FETCH_ALLARTS_SUCCESS,
 } from "../../actionTypes";
 
 const initialState = {
   loading: false,
   arts: [],
+  allarts: [],
   user: "",
   deleting: false,
   deleted: false,
@@ -31,6 +33,14 @@ const artworkReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         arts: action.payload,
+        user: action.payload.arts[0].creator_name,
+        error: null,
+      };
+    case FETCH_ALLARTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allarts: action.payload,
         user: action.payload.arts[0].creator_name,
         error: null,
       };

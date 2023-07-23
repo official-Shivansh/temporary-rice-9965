@@ -14,7 +14,9 @@ import { useSelector } from "react-redux";
 
 export default function UserAvatar() {
 
-    const logged_in_user = useSelector((store) => store.artworkReducer.user) || "Default User"
+    const logged = JSON.parse(localStorage.getItem("user"))
+
+    const logged_in_user = logged.name || useSelector((store) => store.artworkReducer.user) 
 
     return (
         <Center py={6}>
@@ -100,6 +102,9 @@ function AvatarWithRipple() {
   }
 	`;
 
+    const logged = JSON.parse(localStorage.getItem("user"))
+    console.log(logged.profilePicture)
+
     return (
         <Flex
             justifyContent="center"
@@ -127,7 +132,7 @@ function AvatarWithRipple() {
                     animation: `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
                 }}>
                 <Avatar
-                    src="https://i.pravatar.cc/300"
+                    src={logged.profilePicture}
                     size="full"
                     position="absolute"
                     top={0}
