@@ -6,7 +6,7 @@ const artworkRouter = Router();
 const { authMiddleware } = require("../middleware/auth.middleware");
 
 artworkRouter.get("/getarts", async (req, res) => {
-  let { title, creator_name } = req.query;
+  let { title, creator_name, typeOfArtWork } = req.query;
   try {
     let query = {};
     if (title && creator_name) {
@@ -15,9 +15,11 @@ artworkRouter.get("/getarts", async (req, res) => {
       query.title = { $regex: title, $options: "i" };
     } else if (creator_name) {
       query.creator_name = { $regex: creator_name, $options: "i" };
+    } else if (typeOfArtWork) {
+      query.typeOfArtWork = { $regex: typeOfArtWork, $options: "i" };
     }
     let arts = await ArtworkModel.find(query);
-    console.log("here inside get arts", arts);
+
     res.status(200).send({ msg: "All arts fetched", arts });
   } catch (error) {
     res.status(400).send({ error: error.message });

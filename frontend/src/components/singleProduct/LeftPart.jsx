@@ -32,15 +32,15 @@ export default function LeftPart() {
 
     // const item = products?.find((element) => element._id === id);
     let item = getProductById(id).then((res) => {
-      console.log("res is", res.art)
+
       setProduct(res.art)
     })
     console.log("item inside useEffect item is", item)
 
-    console.log("item is", item)
+
   }, [id]);
 
-  console.log("single product", product)
+
 
 
   // const handleToggleFavorite = () => {

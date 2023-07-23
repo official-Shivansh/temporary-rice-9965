@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import {Image, Box, Flex, Button, Heading, Text, Input, InputGroup, InputLeftElement,  Grid, GridItem } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Image, Box, Flex, Button, Heading, Text, Input, InputGroup, InputLeftElement, Grid, GridItem } from '@chakra-ui/react'
 import BgVideo from "../images/background.mp4"
 import BgVideo2 from "../images/background2.mp4"
 import { Search2Icon } from '@chakra-ui/icons'
@@ -14,29 +14,33 @@ function Container() {
         width: '100%',
 
     };
+
+
     const dispatch = useDispatch()
     useEffect(() => {
+
         dispatch(fetchAllArts)
     }, [])
+
 
     const products = useSelector((store => store.artworkReducer.allarts.arts))
     console.log("inside homepage products", products)
     return (
         <>
-            <Box   mt={"5%"} w={"100%"} h={"80vh"}>
+            <Box mt={"5%"} w={"100%"} h={"80vh"}>
                 {/* <video style={{ objectFit: "cover", height: "100%", width: "100%" }} src={BgVideo} autoPlay loop muted /> */}
                 <video style={{ objectFit: "cover", height: "100%", width: "100%", filter: "brigthness(70%)" }} src={BgVideo2} autoPlay loop muted />
                 <Box position={"absolute"} w={"100%"} h={"80vh"} top={"20"} textAlign={"center"} alignItems={"center"} color={"white"} >
                     <Flex width={"100%"} justify={"center"}>
 
                         <Flex w={"60%"} flexWrap={"wrap"} justifyContent={"space-evenly"} gap={"2%"}>
-                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Discover</Text></Button>
-                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Animation</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Painting</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Photography</Text></Button>
                             <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Branding</Text></Button>
                             <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Illustration</Text></Button>
-                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Mobile</Text></Button>
-                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Print</Text></Button>
-                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Product Design</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Modern Art</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Typography</Text></Button>
+                            <Button borderRadius={"20px"} background={"rgba(0, 0, 0, .2)"} _hover={{ color: "black", bgColor: "white" }} color={"white"}><Text size={"md"}>Design</Text></Button>
 
                         </Flex>
                     </Flex>
@@ -52,7 +56,8 @@ function Container() {
                         {/* <Input w={"60%"} variant='flushed' placeholder='Search...' /> */}
                         <InputGroup w={"45%"}>
 
-                            <Input color={"black"} _focus={{ bg: "white", border: "0px solid white" }} bgColor={"white"} borderRadius={"50px"} variant='filled' placeholder='Search...' />
+                            <Input color={"black"} _focus={{ bg: "white", border: "0px solid white" }} bgColor={"white"} borderRadius={"50px"} variant='filled' placeholder='Search...'
+                            />
                             <InputLeftElement  >
                                 {/* <CheckIcon color='green.500' /> */}
                                 <Search2Icon color='grey' />
@@ -62,7 +67,7 @@ function Container() {
                 </Box>
             </Box>
             <Flex width={"100%"} justifyContent={"center"}>
-                
+
                 <Grid w={"90%"} mt={"5%"} templateColumns={{ base: 'repeat(1,1fr)', sm: 'repeat(2,1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(4, 1fr)' }} gap={6}>
                     {
                         products?.map((art) => {
@@ -82,8 +87,8 @@ function Container() {
                             )
                         })
                     }
-               
-            </Grid>
+
+                </Grid>
             </Flex>
             <Box textAlign={"center"} w={"90%"} m={"auto"} mt={"5%"} h={{ base: "70vh", md: "40vh" }} >
 

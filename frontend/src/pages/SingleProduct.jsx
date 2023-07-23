@@ -7,10 +7,10 @@ export default function SingleProduct() {
   return (
     <Box>
       <Flex gap="5" flexDirection={{ base: "column", md: "row" }}>
-        <Box p="5" w={{ base: "100%",  md: "65%"}}>
+        <Box p="5" w={{ base: "100%", md: "65%" }}>
           <LeftPart />
         </Box>
-        <Box w={{ base: "100%",  md: "35%"}} p="5">
+        <Box w={{ base: "100%", md: "35%" }} p="5">
           <RightPart />
         </Box>
       </Flex>
