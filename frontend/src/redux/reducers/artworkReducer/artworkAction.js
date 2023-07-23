@@ -13,7 +13,8 @@ import {
 import axios from "axios";
 
 // Set the token as a header in the request
-const accessToken = localStorage.getItem("accessToken");
+const accessToken = JSON.parse(localStorage.getItem("token"));
+console.log("here accessToken", accessToken);
 const config = {
   headers: {
     Authorization: `Bearer ${accessToken}`,
