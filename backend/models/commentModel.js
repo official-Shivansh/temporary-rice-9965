@@ -3,10 +3,9 @@ const mongoose = require("mongoose");
 const commentSchema = new mongoose.Schema(
   {
     comment_text: String,
-    comment_creator: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "UserModel",
-    },
+    comment_creator_img: String,
+    createdby: String,
+    comment_creator: String,
   },
   { versionKey: false }
 );

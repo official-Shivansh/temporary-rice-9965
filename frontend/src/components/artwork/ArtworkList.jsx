@@ -3,7 +3,7 @@ import ArtworkDetail from './ArtworkDetail'
 import { Box, useBreakpointValue } from '@chakra-ui/react';
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchArts, deleteArt } from '../../redux/reducers/artworkReducer/artworkAction';
+import { fetchArts, deleteArt, fetchAllArts } from '../../redux/reducers/artworkReducer/artworkAction';
 const ArtworkList = () => {
 
     const dispatch = useDispatch()
@@ -15,13 +15,19 @@ const ArtworkList = () => {
 
     useEffect(() => {
         dispatch(fetchArts)
+
     }, [reload])
 
+    useEffect(() => {
+        dispatch(fetchArts);
+    }, []);
 
     const handleDelete = (postId) => {
         // Assuming the post object has the _id field
+        console.log("handle delete called")
         dispatch(deleteArt(postId))
-        setReload((prev) => prev + 1);
+        setReload(reload + 1);
+        dispatch(fetchArts)
     };
 
     const columnCount = useBreakpointValue({ base: 1, sm: 1, md: 2, lg: 3, xl: 4, xxl: 6 });
@@ -29,7 +35,6 @@ const ArtworkList = () => {
         <Box
             style={{
                 display: "grid",
-                border: "5px solid blue",
                 gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
                 margin: "25px",
             }}

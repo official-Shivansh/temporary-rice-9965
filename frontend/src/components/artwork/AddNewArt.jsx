@@ -16,7 +16,7 @@ export default function AddNewArt() {
 
     return (
         <>
-            <Button onClick={onOpen} leftIcon={<AiOutlinePlus style={{ fontWeight: 800 }} />} colorScheme='blue' color={"white"} variant='solid' marginLeft={"100"}>
+            <Button onClick={onOpen} leftIcon={<AiOutlinePlus style={{ fontWeight: 800 }} />} colorScheme='blue' color={"white"} variant='solid' marginLeft={"100"} >
                 New Art
             </Button>
 
