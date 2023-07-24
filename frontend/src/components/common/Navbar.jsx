@@ -2,7 +2,7 @@ import React from 'react';
 import logo from "../images/logo.png"
 import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux"
 import {
   Box,
   Image,
@@ -36,7 +36,8 @@ const Navbar = () => {
     store.authReducer
   })
 
-  console.log("checkAuth",isAuth);
+  const token = JSON.parse(localStorage.getItem("token")) || null
+  console.log("checkAuth", isAuth);
 
 
   const { isOpen, onToggle } = useDisclosure();
@@ -62,7 +63,7 @@ const Navbar = () => {
   }, [prevScrollpos]);
 
   return (
-    <Box>
+    <Box style={{ marginBottom: "80px" }}>
       <Flex
         style={{ top: `${navbarTop}px` }}
         transition={"top 0.3s"}
@@ -94,10 +95,10 @@ const Navbar = () => {
             aria-label={'Toggle Navigation'}
           /> */}
         </Flex>
-        <Flex  flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* logo image */}
-          <NavLink to = "/">
-          <Image pl={"2%"} h={"60px"} src={logo} alt="logo"/>
+          <NavLink to="/">
+            <Image pl={"2%"} h={"60px"} src={logo} alt="logo" />
           </NavLink>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             {/* <DesktopNav /> */}
@@ -111,36 +112,44 @@ const Navbar = () => {
           alignItems={"center"}
           pl={"2%"}
         >
-          <Flex transition= "transform .2s" _hover={{transform:"scale(1.4)"}} title='Wishlist' justifyContent={"center"} alignItems={"center"} >
-            <StarIcon color={"black"}/>
+          <Flex transition="transform .2s" _hover={{ transform: "scale(1.4)" }} title='Wishlist' justifyContent={"center"} alignItems={"center"} >
+            <StarIcon color={"black"} />
           </Flex>
-          <NavLink to = "/cart">
-          <Flex transition= "transform .2s" _hover={{transform:"scale(1.4)"}} title='cart' justifyContent={"center"} alignItems={"center"} >
-          <FiLock  />
-          </Flex>
+          {
+            token ? (<NavLink to="/cart">
+              <Flex transition="transform .2s" _hover={{ transform: "scale(1.4)" }} title='cart' justifyContent={"center"} alignItems={"center"} >
+                <FiLock />
+              </Flex>
+            </NavLink>) : (
+              <NavLink to="/login">
+                <Flex transition="transform .2s" _hover={{ transform: "scale(1.4)" }} title='cart' justifyContent={"center"} alignItems={"center"} >
+                  <FiLock />
+                </Flex>
+              </NavLink>
+            )
+          }
+          <NavLink to="/login">
+            <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
+              Sign In
+            </Button>
           </NavLink>
-          <NavLink to="/login"> 
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
-            Sign In
-          </Button>
+          <NavLink to="/register">
+            <Button
+              as={'a'}
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'black'}
+              href={'#'}
+              _hover={{
+                bg: '#9BABB8',
+              }}
+            >
+              Sign Up
+            </Button>
           </NavLink>
-          <NavLink to = "/register">
-          <Button
-            as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'black'}
-            href={'#'}
-            _hover={{
-              bg: '#9BABB8',
-            }}
-          >
-            Sign Up
-          </Button>
-          </NavLink>
-          
+
         </Stack>
       </Flex>
       <Collapse in={isOpen} animateOpacity>

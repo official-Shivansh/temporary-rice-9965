@@ -6,7 +6,7 @@ const artworkRouter = Router();
 const { authMiddleware } = require("../middleware/auth.middleware");
 
 artworkRouter.get("/getarts", async (req, res) => {
-  let { title, creator_name } = req.query;
+  let { title, creator_name, typeOfArtWork } = req.query;
   try {
     let query = {};
     if (title && creator_name) {
@@ -15,37 +15,20 @@ artworkRouter.get("/getarts", async (req, res) => {
       query.title = { $regex: title, $options: "i" };
     } else if (creator_name) {
       query.creator_name = { $regex: creator_name, $options: "i" };
+    } else if (typeOfArtWork) {
+      query.typeOfArtWork = { $regex: typeOfArtWork, $options: "i" };
     }
     let arts = await ArtworkModel.find(query);
-    console.log("here inside get arts", arts);
+
     res.status(200).send({ msg: "All arts fetched", arts });
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    res.status(400).send({ error: error.message, err: error.stack });
   }
 });
 
 // Restricted Routes start here
 artworkRouter.use(authMiddleware);
 // getting a single product
-
-artworkRouter.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const art = await ArtworkModel.findById(id);
-
-    // const artCretorId = art.creator.toString();
-
-    console.log("id", id);
-
-    res.status(200).send({
-      msg: "Post fetched according to paramId successfully",
-      art,
-    });
-    return;
-  } catch (error) {
-    res.status(400).send({ error: error.message });
-  }
-});
 
 artworkRouter.post("/addart", async (req, res) => {
   console.log("inside /addart route", req.body);
@@ -72,13 +55,16 @@ artworkRouter.post("/addart", async (req, res) => {
 });
 
 artworkRouter.get("/profile", async (req, res) => {
+  // res.status(200).send("returning");
+  console.log("inside profile route");
   try {
     const userId = req.userId;
+    console.log("printing userId", userId);
     const query = { creator: userId }; // Filter by the logged-in user's ID
     let arts = await ArtworkModel.find(query);
     res.status(200).send({ msg: "Logged in user's arts are fetched.", arts });
   } catch (error) {
-    res.status(400).send({ error: error.message });
+    res.status(400).send({ error: "sending errro", err: error.stack });
   }
 });
 
@@ -145,7 +131,7 @@ artworkRouter.post("/:id/like", async (req, res) => {
   try {
     const artworkId = req.params.id;
 
-    console.log("inside like artworkId", artworkId)
+    console.log("inside like artworkId", artworkId);
 
     // Find the artwork document by its ID
     const artwork = await ArtworkModel.findById(artworkId);
@@ -244,5 +230,21 @@ artworkRouter.get("/:id/comments", async (req, res) => {
   }
 });
 
+artworkRouter.get("/:id", async (req, res) => {
+  // res.status(200).send("success");
+  try {
+    const { id } = req.params;
+    const art = await ArtworkModel.findById(id);
+    // const artCretorId = art.creator.toString();
+    console.log("id", id);
+    res.status(200).send({
+      msg: "Post fetched according to paramId successfully",
+      art,
+    });
+    return;
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
 
 module.exports = { artworkRouter };
