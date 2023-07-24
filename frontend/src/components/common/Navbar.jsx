@@ -1,11 +1,16 @@
 import React from 'react';
-import logo from "../images/logo.png"
-import { NavLink } from 'react-router-dom';
+import logo from "../images/logo.png";
+import axios from 'axios';
+import { NavLink,useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useSelector } from "react-redux"
+
+import { useSelector,useDispatch } from "react-redux"
+
 import {
+  Avatar,
   Box,
   Image,
+  Center,
   Flex,
   Text,
   IconButton,
@@ -14,6 +19,11 @@ import {
   Collapse,
   Icon,
   Link,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -32,18 +42,25 @@ import { FiLock } from "react-icons/fi";
 
 const Navbar = () => {
 
-  const isAuth = useSelector((store) => {
-    store.authReducer
-  })
+  // const isAuth = useSelector((store) => {
+  //   store.authReducer
+  // })
+
 
   const token = JSON.parse(localStorage.getItem("token")) || null
   console.log("checkAuth", isAuth);
+
 
 
   const { isOpen, onToggle } = useDisclosure();
   const [prevScrollpos, setPrevScrollpos] = useState(window.pageYOffset);
   const [navbarTop, setNavbarTop] = useState(0);
 
+  const isAuthenticated = useSelector((state) => state.authReducer.isAuthenticated);
+  const user = useSelector((state) => state.authReducer.user.neme);
+  const username = user?.name || null;
+  const navigate =  useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -61,7 +78,6 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [prevScrollpos]);
-
   return (
     <Box style={{ marginBottom: "80px" }}>
       <Flex
@@ -86,14 +102,7 @@ const Navbar = () => {
           ml={{ base: -2 }}
           display={{ base: 'flex', md: 'none' }}
         >
-          {/* <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant={'ghost'}
-            aria-label={'Toggle Navigation'}
-          /> */}
+       
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           {/* logo image */}
@@ -104,7 +113,7 @@ const Navbar = () => {
             {/* <DesktopNav /> */}
           </Flex>
         </Flex>
-        <Stack
+        {/* <Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
           direction={'row'}
@@ -149,6 +158,111 @@ const Navbar = () => {
               Sign Up
             </Button>
           </NavLink>
+
+          
+        </Stack> */}
+        <Stack
+          flex={{ base: 1, md: 0 }}
+          justify={'flex-end'}
+          direction={'row'}
+          spacing={6}
+          alignItems={'center'}
+          pl={'2%'}
+        >
+           <Flex transition= "transform .2s" _hover={{transform:"scale(1.4)"}} title='Wishlist' justifyContent={"center"} alignItems={"center"} >
+            <StarIcon color={"black"}/>
+          </Flex>
+          <NavLink to = "/cart">
+          <Flex transition= "transform .2s" _hover={{transform:"scale(1.4)"}} title='cart' justifyContent={"center"} alignItems={"center"} >
+          <FiLock  />
+          </Flex>
+          </NavLink>
+          {/* Conditionally render the username or "Sign In" button */}
+          {isAuthenticated ? (
+            <>
+            <Stack>
+
+            {/* <Text fontWeight={600} fontSize={'sm'}>
+              {user}
+            </Text>
+            <Text>
+              Logout
+            </Text> */}
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
+                variant={'link'}
+                cursor={'pointer'}
+                minW={0}>
+                <Avatar
+                  size={'sm'}
+                  src={'https://ca.slack-edge.com/T05D44GA3A5-U05D57UMY4U-11735f0b8b31-192'}
+                />
+              </MenuButton>
+              <MenuList alignItems={'center'}>
+                <br />
+                <Center>
+                  <Avatar
+                    size={'2xl'}
+                    src={'https://ca.slack-edge.com/T05D44GA3A5-U05D57UMY4U-11735f0b8b31-192'}
+                  />
+                </Center>
+                <br />
+                <Center>
+                  <Text>
+                  {user}
+                  </Text>
+                </Center>
+                <br />
+                <MenuDivider />
+                <NavLink to = "/profile">
+                <MenuItem>Profile</MenuItem>
+                </NavLink>
+                <MenuItem >Logout</MenuItem>
+              </MenuList>
+            </Menu>
+            
+                    </Stack>
+            </>
+
+
+
+            
+
+
+
+
+
+
+
+
+          ) : (
+            <>
+              <NavLink to="/login">
+                <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
+                  Sign In
+                </Button>
+              </NavLink>
+              <NavLink to="/register">
+                <Button
+                  as={'a'}
+                  display={{ base: 'none', md: 'inline-flex' }}
+                  fontSize={'sm'}
+                  fontWeight={600}
+                  color={'white'}
+                  bg={'black'}
+                  href={'#'}
+                  _hover={{
+                    bg: '#9BABB8',
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </NavLink>
+              
+            </>
+          )}
 
         </Stack>
       </Flex>
