@@ -1,15 +1,19 @@
 // actions/cartActions.js
 import axios from 'axios';
-import {  GET_FAV_ITEMS,DELETE_FAV_ITEM } from '../actionTypes';
+import { GET_FAV_ITEMS, DELETE_FAV_ITEM } from '../actionTypes';
+const accessToken = JSON.parse(localStorage.getItem("token"));
+const API_URL = 'https://arthub-qlzd.onrender.com';
 
-
-const API_URL = 'https://test1-h9kd.onrender.com/men';
-
+const config = {
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+};
 // Get cart items
 export const getFavItems = () => async (dispatch) => {
   try {
-    const response = await axios.get(`https://test1-h9kd.onrender.com/men`);
-    
+    const response = await axios.get(`${API_URL}/favourite`, config);
+
     dispatch({
       type: GET_FAV_ITEMS,
       payload: response.data,
@@ -22,12 +26,12 @@ export const getFavItems = () => async (dispatch) => {
 
 export const deleteFavItem = (itemId) => async (dispatch) => {
   try {
-    await axios.delete(`${API_URL}/${itemId}`);
+    await axios.delete(`${API_URL}/favourite/delete/${itemId}`, config);
     dispatch({
       type: DELETE_FAV_ITEM,
       payload: itemId,
     });
   } catch (error) {
-   console.log(error)
+    console.log(error)
   }
 };

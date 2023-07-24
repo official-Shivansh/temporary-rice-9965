@@ -36,7 +36,7 @@ const Cart = () => {
     // Calculate discounted price whenever promoCode or cartItems change
     dispatch(getCartItems());
     calculateDiscountedPrice();
-  }, [promoCode, discountedPrice]);
+  }, [cartItems, promoCode, discountedPrice]);
 
   const handleApplyPromoCode = () => {
     // Here, you can implement the logic to verify the promo code and apply the discount
@@ -99,14 +99,13 @@ const Cart = () => {
   const handleClick = () => {
     navigate("/pay");
   };
-  
+
   return (
     <ChakraProvider theme={theme}>
       <HStack p={4} w="100%" align="flex-start">
         <VStack w="70%" align="center" p={4}>
           {/* Cart Items Section */}
           {cartItems?.map((item) => (
-            
             <Flex
               key={item.product?._id}
               flexDirection={{ base: "column", md: "row" }}
@@ -118,7 +117,7 @@ const Cart = () => {
               borderWidth={2}
               borderRadius={4}
             >
-                   {/* { console.log(item.product,">>>>")} */}
+              {/* { console.log(item.product,">>>>")} */}
 
               <Flex alignItems="center" mb={{ base: 4, md: 0 }}>
                 <Image
@@ -129,7 +128,7 @@ const Cart = () => {
                 />
                 <Text fontWeight="bold">{item.product?.name}</Text>
               </Flex>
-              <Text>₹.{item.product?.price} </Text>
+              <Text>₹ {item.product?.price} </Text>
               <Box
                 cursor="pointer"
                 color="red.500"
@@ -141,7 +140,7 @@ const Cart = () => {
             </Flex>
           ))}
           <Box fontSize="20px" mt={4} textAlign="right" w="100%">
-            Total: ₹.{getTotalPrice().toFixed(2)}
+            Total: ₹ {getTotalPrice().toFixed(2)}
           </Box>
         </VStack>
 

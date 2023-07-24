@@ -28,20 +28,18 @@ export default function LeftPart() {
   }, [id, products]);
 
 
+  //     // const item = products?.find((element) => element._id === id);
+  //     let item = getProductById(id).then((res) => {
+  //       console.log("res is", res.art)
+  //       setProduct(res.art)
+  //     })
+  //     console.log("item inside useEffect item is", item)
 
+  //     console.log("item is", item)
+  //   }, [id]);
 
+  //   console.log("single product", product)
 
-//     // const item = products?.find((element) => element._id === id);
-//     let item = getProductById(id).then((res) => {
-//       console.log("res is", res.art)
-//       setProduct(res.art)
-//     })
-//     console.log("item inside useEffect item is", item)
-
-//     console.log("item is", item)
-//   }, [id]);
-
-//   console.log("single product", product)
 
 
   const handleAddToCart = () => {
@@ -76,25 +74,25 @@ export default function LeftPart() {
       <Box m="9" mt="4">
         {/* likePurchaseBtn */}
         <Flex gap="4" className="likePurchaseBtn">
-          <Link to={'/fav'}>
-            <Button
-              colorScheme="white"
-              color="black"
-              leftIcon={
-                isFavorite ? <FaHeart color="red" /> : <FaHeart color="grey" />
-              }
-              sx={{
-                _hover: {
-                  backgroundColor: "#319795",
-                },
-              }}
-              onClick={handleToggleFavorite}
-            >
-              {/* Add to Favorites */}
-              {isFavorite ? "Added" : "Add to Favorites"}
-            </Button>
+          <Link to={"/fav"} target="_blank">
+          <Button
+            colorScheme="white"
+            color="black"
+            leftIcon={
+              isFavorite ? <FaHeart color="red" /> : <FaHeart color="grey" />
+            }
+            sx={{
+              _hover: {
+                backgroundColor: "#319795",
+              },
+            }}
+            onClick={handleToggleFavorite}
+          >
+            {/* Add to Favorites */}
+            {isFavorite ? "Added" : "Add to Favorites"}
+          </Button>
           </Link>
-          <Link to={'/cart'}>
+          <Link to={"/cart"} target="_blank">
             <Button
               colorScheme="black"
               color="black"

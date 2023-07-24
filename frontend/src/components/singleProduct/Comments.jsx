@@ -4,16 +4,6 @@ import { FaLocationArrow, FaRegCommentAlt } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { postComment, getComments } from "../../redux/reducers/artworkReducer/artworkAction";
 
-const imageData = {
-  imageUrl: "https://example.com/artwork.jpg",
-  comments: [
-    { user: "Monika", comment: "This is beautiful!", profilePicture: `https://e1.pxfuel.com/desktop-wallpaper/932/598/desktop-wallpaper-cartoon-dp-girl-for-whatsapp-instagram-dp-girl.jpg` },
-    { user: "Gaby", comment: "Amazing artwork!", profilePicture: 'https://e1.pxfuel.com/desktop-wallpaper/886/876/desktop-wallpaper-top-35-sad-girl-pics-for-whatsapp-sad-alone-girls-for-whatsapp-dp-girls-whatsapp-dp.jpg' },
-    { user: "Justin", comment: "Great job!", profilePicture: "https://veenanews.in/wp-content/uploads/2023/04/14451fcffeebdf14ab11c3c47b37ee9b.jpg" },
-  ],
-  likes: 42,
-};
-
 export default function Comments() {
 
   const [reload, setReload] = useState(0)
