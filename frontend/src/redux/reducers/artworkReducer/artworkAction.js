@@ -50,13 +50,15 @@ export const fetchArts = (dispatch) => {
 export const fetchAllArts = (dispatch) => {
   dispatch({ type: FETCH_ARTS_REQUEST });
 
-  axios
+  return axios
     .get(`${url}/arts/getarts`, config)
     .then((response) => {
       dispatch({
         type: FETCH_ALLARTS_SUCCESS,
         payload: response.data,
       });
+
+      return response.data;
     })
     .catch((error) => {
       dispatch({
