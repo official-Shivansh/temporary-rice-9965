@@ -5,7 +5,7 @@ const { BlacklistModel } = require("../models/blacklistModel");
 const authMiddleware = async (req, res, next) => {
   try {
     let token = req.headers.authorization?.split(" ")[1] || null;
-console.log("token in auth middleware", token);
+    console.log("token in auth middleware", token);
     let existingBlacklist = await BlacklistModel.find({
       tokens: { $in: token },
     });
@@ -22,6 +22,7 @@ console.log("token in auth middleware", token);
 
     req.userId = decoded.userId;
     req.name = decoded.user;
+    console.log("all good in middleware");
     next();
   } catch (error) {
     res

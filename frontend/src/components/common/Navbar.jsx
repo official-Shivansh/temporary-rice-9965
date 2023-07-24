@@ -36,6 +36,7 @@ const Navbar = () => {
     store.authReducer
   })
 
+  const token = JSON.parse(localStorage.getItem("token")) || null
   console.log("checkAuth", isAuth);
 
 
@@ -114,11 +115,19 @@ const Navbar = () => {
           <Flex transition="transform .2s" _hover={{ transform: "scale(1.4)" }} title='Wishlist' justifyContent={"center"} alignItems={"center"} >
             <StarIcon color={"black"} />
           </Flex>
-          <NavLink to="/cart">
-            <Flex transition="transform .2s" _hover={{ transform: "scale(1.4)" }} title='cart' justifyContent={"center"} alignItems={"center"} >
-              <FiLock />
-            </Flex>
-          </NavLink>
+          {
+            token ? (<NavLink to="/cart">
+              <Flex transition="transform .2s" _hover={{ transform: "scale(1.4)" }} title='cart' justifyContent={"center"} alignItems={"center"} >
+                <FiLock />
+              </Flex>
+            </NavLink>) : (
+              <NavLink to="/login">
+                <Flex transition="transform .2s" _hover={{ transform: "scale(1.4)" }} title='cart' justifyContent={"center"} alignItems={"center"} >
+                  <FiLock />
+                </Flex>
+              </NavLink>
+            )
+          }
           <NavLink to="/login">
             <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
               Sign In
