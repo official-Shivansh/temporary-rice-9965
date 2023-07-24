@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   Box,
   Container,
@@ -8,33 +8,29 @@ import {
   Text,
   IconButton,
   useToast,
-} from '@chakra-ui/react';
-import { FaHeart, FaTrash } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFavItems,deleteFavItem } from '../redux/Favourite/action';
-
+} from "@chakra-ui/react";
+import { FaHeart, FaTrash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { getFavItems, deleteFavItem } from "../redux/Favourite/action";
+import { Link } from "react-router-dom";
 
 const FavoriteItemsPage = () => {
-  
-  
   const toast = useToast();
 
-  const favoriteItems = useSelector((store) => store.FavReducer.items)
+  const favoriteItems = useSelector((store) => store.FavReducer.items);
   const dispatch = useDispatch();
-  console.log(favoriteItems)
+  // console.log(favoriteItems);
 
   useEffect(() => {
-   dispatch(getFavItems())
-    
-    
-  }, [dispatch]);
+    dispatch(getFavItems());
+  }, [favoriteItems]);
 
   const handleRemoveItem = (itemId) => {
-    dispatch(deleteFavItem(itemId))
+    dispatch(deleteFavItem(itemId));
     toast({
-      title: 'Item Removed',
-      description: 'The item has been removed from your favorites.',
-      status: 'success',
+      title: "Item Removed",
+      description: "The item has been removed from your favorites.",
+      status: "success",
       duration: 3000,
       isClosable: true,
     });
@@ -47,25 +43,34 @@ const FavoriteItemsPage = () => {
           My Favorite Items
         </Heading>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
-          {favoriteItems.map((item) => (
-            <Box key={item.id} bg="white" borderRadius="md" shadow="md" overflow="hidden">
+          {favoriteItems?.map((item) => (
+            <Box
+              key={item._id}
+              bg="white"
+              borderRadius="md"
+              shadow="md"
+              overflow="hidden"
+            >
               <Flex align="center" justify="space-between" p={4}>
                 <Text fontSize="xl" fontWeight="semibold">
-                  {item.name}
+                  {/* {console.log(item,"item")} */}
+                  {item.product.title}
                 </Text>
                 <IconButton
                   icon={<FaTrash />}
                   variant="ghost"
                   color="red.500"
-                  aria-label={`Remove ${item.name}`}
-                  onClick={() => handleRemoveItem(item.id)}
+                  aria-label={`Remove ${item.product.name}`}
+                  onClick={() => handleRemoveItem(item.product?._id)}
                 />
               </Flex>
               <Box w="100%">
-                <img src={item.image} alt={item.name} />
+                {/* <Link to={`product/${item.product._id}`}> */}
+                  <img src={item.product.image} alt={item.product.name} />
+                {/* </Link> */}
               </Box>
               <Box p={4}>
-                <Text color="gray.600">₹.{item.price}</Text>
+                <Text color="gray.600">₹ {item.product.price}</Text>
               </Box>
             </Box>
           ))}

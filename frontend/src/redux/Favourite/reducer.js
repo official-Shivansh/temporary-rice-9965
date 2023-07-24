@@ -1,7 +1,7 @@
- 
 
 
-import {  GET_FAV_ITEMS,DELETE_FAV_ITEM } from '../actionTypes';
+
+import { GET_FAV_ITEMS, DELETE_FAV_ITEM, ADD_TO_CART } from '../actionTypes';
 
 
 const initialState = {
@@ -19,6 +19,11 @@ const FavReducer = (state = initialState, action) => {
       return {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload),
+      };
+    case ADD_TO_CART:
+      return {
+        ...state,
+        items: [...state.items, action.payload]
       };
     default:
       return state;
