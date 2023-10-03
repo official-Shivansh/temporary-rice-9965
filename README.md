@@ -21,6 +21,7 @@ Online Art Gallery and Community Website
     7. MongoDB
     
 
+![Screenshot 2023-10-03 194322](https://github.com/official-Shivansh/temporary-rice-9965/assets/117287131/1e411c6b-2c9e-4ad4-983e-da34925f7500)
 
 
 If the user deletes all the items from the cart or places the order, in either case, the cart will change into an empty cart page and will show a button "Start Shopping" which will take the user back to the "Products Page"
